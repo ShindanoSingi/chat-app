@@ -7,6 +7,11 @@ function Register() {
           email: '',
           password: '',
      });
+
+     const registerUser = async (e) => {
+          console.log(user);
+     };
+
      return (
           <div className='h-screen bg-primary flex items-center  justify-center'>
                <div className='bg-white shadow-md p-5 flex flex-col gap-5 w-96'>
@@ -27,7 +32,7 @@ function Register() {
                          onChange={(e) => setUser({ ...user, password: e.target.value })}
                          placeholder="Enter your password"
                     />
-                    <button className='contained-btn'>Register</button>
+                    <button className='contained-btn' onClick={registerUser}>Register</button>
                     <Link to='/login'
                          className='underline text-center'
                     >
