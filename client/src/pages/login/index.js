@@ -1,22 +1,27 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router-dom';
 import { LoginUser } from '../../apicalls/users';
 
 
 function Login() {
+
      const [user, setUser] = useState({
           email: '',
           password: '',
      });
 
+     const navigate = useNavigate();
+
      const loginUser = async () => {
           try {
                const response = await LoginUser(user);
-               console.log(response);
                if (response.success) {
-                    console.log(response.message);
+                    toast.success(response.message);
+                    localStorage.setItem("token", response.data);
+                    navigate('/');
                } else {
-                    console.log(response.message);
+                    toast.error(response.message);
                }
           } catch (error) {
                alert(error);

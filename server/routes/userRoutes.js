@@ -2,6 +2,8 @@ const User = require('../models/userModel');
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const authMiddleware = require('../middlewares/authMiddleware');
+const { response } = require('express');
 
 // User registration
 router.post('/register', async (req, res) => {
@@ -20,7 +22,10 @@ router.post('/register', async (req, res) => {
           req.body.password = hashedPassword;
           const newUser = new User(req.body);
           await newUser.save();
-          res.json({ message: `User has been created.` });
+          return res.send({
+               message: 'User has been created.',
+               success: true,
+          });
      } catch (error) {
           res.send({
                message: error.message,
@@ -37,7 +42,7 @@ router.post('/login', async (req, res) => {
           if (!user) {
                return res.send({
                     success: false,
-                    message: 'User does not exist',
+                    message: 'Invalid e-mail',
                });
           }
           // Check if the password is correct
@@ -50,9 +55,28 @@ router.post('/login', async (req, res) => {
           }
 
           // Create and assign a token
-          const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
-          res.json({
-               message: `User Logged in successfully!`
+          const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+          return res.json({
+               success: true,
+               message: `User Logged in successfully!`,
+               data: token,
+          });
+     } catch (error) {
+          return res.send({
+               message: error.message,
+               success: false,
+          });
+     }
+});
+
+// Get current user
+router.get('/get-current-user', authMiddleware, async (req, res) => {
+     try {
+          const user = await User.findOne({ _id: req.body.userId });
+          res.send({
+               success: true,
+               message: 'User fetched successfully!',
+               data: user,
           });
      } catch (error) {
           res.send({
