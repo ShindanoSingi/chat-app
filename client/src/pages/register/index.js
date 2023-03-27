@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { RegisterUser } from '../../apicalls/users';
+
 
 function Register() {
      const [user, setUser] = useState({
@@ -8,8 +10,18 @@ function Register() {
           password: '',
      });
 
-     const registerUser = async (e) => {
-          console.log(user);
+     const register = async () => {
+          try {
+               const response = await RegisterUser(user);
+               console.log(response);
+               if (response.success) {
+                    console.log(response.message);
+               } else {
+                    console.log(response.message);
+               }
+          } catch (error) {
+               alert(error);
+          }
      };
 
      return (
@@ -32,7 +44,7 @@ function Register() {
                          onChange={(e) => setUser({ ...user, password: e.target.value })}
                          placeholder="Enter your password"
                     />
-                    <button className='contained-btn' onClick={registerUser}>Register</button>
+                    <button className='contained-btn' onClick={register}>Register</button>
                     <Link to='/login'
                          className='underline text-center'
                     >

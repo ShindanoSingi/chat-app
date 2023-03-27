@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
+import { LoginUser } from '../../apicalls/users';
 
 
 function Login() {
@@ -8,9 +9,19 @@ function Login() {
           password: '',
      });
 
-     const loginUser = async (e) => {
-          console.log(user);
-     };
+     const loginUser = async () => {
+          try {
+               const response = await LoginUser(user);
+               console.log(response);
+               if (response.success) {
+                    console.log(response.message);
+               } else {
+                    console.log(response.message);
+               }
+          } catch (error) {
+               alert(error);
+          }
+     }
 
      return (
           <div className='h-screen bg-primary flex items-center  justify-center'>
