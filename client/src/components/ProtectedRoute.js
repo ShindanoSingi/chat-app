@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { GetCurrentUser } from '../apicalls/users';
 
 function ProtectedRoute({ children }) {
+
+     const [user, setUser] = useState(null);
 
      const navigate = useNavigate();
 
@@ -10,12 +13,13 @@ function ProtectedRoute({ children }) {
           try {
                const response = await GetCurrentUser();
                if (response.success) {
-                    return true;
+                    setUser(response.data);
                } else {
+                    toast.error(response.message);
                     navigate('/login');
-                    return false;
                }
           } catch (error) {
+               toast.error(error.message);
                navigate('/login');
           }
      };
@@ -28,7 +32,11 @@ function ProtectedRoute({ children }) {
      }, []);
 
      return (
-          <div>{children}</div>
+          <div>
+               {user?.name}
+               {user?.email}
+               {children}
+          </div>
      )
 }
 
