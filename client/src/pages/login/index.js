@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { LoginUser } from '../../apicalls/users';
+import { showLoader, hideLoader } from '../../redux/loaderSlice';
 
 
 function Login() {
-
+     const dispatch = useDispatch();
      const navigate = useNavigate();
-
      const [user, setUser] = useState({
           email: '',
           password: '',
      });
 
-
-
      const loginUser = async () => {
           try {
+               dispatch(showLoader());
                const response = await LoginUser(user);
+               dispatch(hideLoader());
                if (response.success) {
                     toast.success(response.message);
                     localStorage.setItem("token", response.data);
@@ -26,6 +27,7 @@ function Login() {
                     toast.error(response.message);
                }
           } catch (error) {
+               dispatch(hideLoader());
                alert(error);
           }
      }

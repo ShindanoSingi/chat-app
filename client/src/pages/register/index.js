@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { RegisterUser } from '../../apicalls/users';
 import { toast } from 'react-hot-toast';
-
+import { useDispatch } from 'react-redux';
+import { hideLoader, showLoader } from '../../redux/loaderSlice';
 
 function Register() {
+     const dispatch = useDispatch();
      const navigate = useNavigate();
      const [user, setUser] = useState({
           name: '',
@@ -14,13 +16,16 @@ function Register() {
 
      const register = async () => {
           try {
+               dispatch(showLoader());
                const response = await RegisterUser(user);
+               dispatch(hideLoader());
                if (response.success) {
                     toast.success(response.message);
                } else {
                     toast.error(response.message);
                }
           } catch (error) {
+               dispatch(hideLoader());
                toast.error(error.message);
           }
      };
