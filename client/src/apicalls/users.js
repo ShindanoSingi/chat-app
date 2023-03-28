@@ -18,9 +18,9 @@ export const RegisterUser = async (user) => {
      }
 };
 
-export const GetCurrentUser = async (user) => {
+export const GetCurrentUser = async () => {
      try {
-          const response = await axiosInstance.post('/api/users/get-current-User', user);
+          const response = await axiosInstance.get('/api/users/get-current-User');
           return response.data;
      } catch (error) {
           return error.response.data;
