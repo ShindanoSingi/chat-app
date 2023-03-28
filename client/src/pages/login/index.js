@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { LoginUser } from '../../apicalls/users';
@@ -6,12 +6,14 @@ import { LoginUser } from '../../apicalls/users';
 
 function Login() {
 
+     const navigate = useNavigate();
+
      const [user, setUser] = useState({
           email: '',
           password: '',
      });
 
-     const navigate = useNavigate();
+
 
      const loginUser = async () => {
           try {
@@ -27,6 +29,12 @@ function Login() {
                alert(error);
           }
      }
+
+     useEffect(() => {
+          if (localStorage.getItem("token")) {
+               navigate('/');
+          }
+     }, []);
 
      return (
           <div className='h-screen bg-primary flex items-center  justify-center'>

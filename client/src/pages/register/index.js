@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { RegisterUser } from '../../apicalls/users';
 import { toast } from 'react-hot-toast';
 
 
 function Register() {
+     const navigate = useNavigate();
      const [user, setUser] = useState({
           name: '',
           email: '',
@@ -23,6 +24,12 @@ function Register() {
                toast.error(error.message);
           }
      };
+
+     useEffect(() => {
+          if (localStorage.getItem("token")) {
+               navigate('/');
+          }
+     }, []);
 
      return (
           <div className='h-screen bg-primary flex items-center  justify-center'>

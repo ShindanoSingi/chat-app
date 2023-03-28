@@ -14,9 +14,6 @@ function ProtectedRoute({ children }) {
                const response = await GetCurrentUser();
                if (response.success) {
                     setUser(response.data);
-               } else {
-                    toast.error(response.message);
-                    navigate('/login');
                }
           } catch (error) {
                toast.error(error.message);
@@ -28,13 +25,17 @@ function ProtectedRoute({ children }) {
           if (localStorage.getItem("token")) {
                getCurrentUser();
           }
+          else {
+               navigate('/login');
+          }
 
      }, []);
 
      return (
           <div>
-               {user?.name}
-               {user?.email}
+               <h1>{user?.name}</h1>
+               <h1>{user?.email}</h1>
+
                {children}
           </div>
      )
