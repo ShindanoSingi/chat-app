@@ -5,9 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import { GetAllUsers, GetCurrentUser } from '../apicalls/users';
 import { hideLoader, showLoader } from '../redux/loaderSlice';
 import { useSelector } from 'react-redux';
-import { SetUser, SetAllUsers } from '../redux/userSlice';
+import { SetUser, SetAllUsers, SetAllChats } from '../redux/userSlice';
 import { FaUserCircle } from 'react-icons/fa';
 import { AiOutlineLogout } from 'react-icons/ai'
+import { GetAllChats } from '../apicalls/chats';
 
 
 function ProtectedRoute({ children }) {
@@ -21,10 +22,12 @@ function ProtectedRoute({ children }) {
                dispatch(showLoader());
                const response = await GetCurrentUser();
                const allUsersResponse = await GetAllUsers();
+               const allChatsResponse = await GetAllChats();
                dispatch(hideLoader());
                if (response.success) {
                     dispatch(SetUser(response.data));
                     dispatch(SetAllUsers(allUsersResponse.data));
+                    dispatch(SetAllChats(allChatsResponse.data));
                }
           } catch (error) {
                dispatch(hideLoader());

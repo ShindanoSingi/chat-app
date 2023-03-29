@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 
 function UsersList({ searchKey }) {
-     const { allUsers } = useSelector((state) => state.userReducer);
+     const { allUsers, allChats } = useSelector((state) => state.userReducer);
 
      return (
           <div className='flex flex-col gap-1 mt-5'>
@@ -11,7 +11,7 @@ function UsersList({ searchKey }) {
                )
                     ?.map((userObj, index) => {
                          return (
-                              <div key={index} className='all-users shadow-sm border p-5 bg-white'>
+                              <div key={index} className='all-users shadow-sm border p-5 bg-white flex justify-between items-center'>
                                    <div className='flex gap-5 items-center'>
                                         {userObj.profilePic && (
                                              <img
@@ -25,6 +25,11 @@ function UsersList({ searchKey }) {
                                                   <h1 className='uppercase text-2xl font-semibold'>{userObj.name[0]}</h1>
                                              </div>)}
                                         <h1>{userObj.name}</h1>
+                                   </div>
+                                   <div>
+                                        {!allChats.find((chat) => chat.users.includes(userObj._id)) &&
+                                             (<button className='border-primary text-primary border bg-white p-1  rounded'>Create Chart</button>)
+                                        }
                                    </div>
                               </div>
                          )
