@@ -33,3 +33,16 @@ input:focus{
      height: 40px;
      text-transform: uppercase;
 }
+
+.all-users:first-child{
+     border-top-right-radius: 30px;
+}
+.all-users:first-child{
+     border-top-left-radius: 30px;
+}
+.all-users:last-child{
+     border-bottom-right-radius: 30px;
+}
+.all-users:last-child{
+     border-bottom-left-radius: 30px;
+}

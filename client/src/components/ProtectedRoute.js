@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { toast } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { GetCurrentUser } from '../apicalls/users';
+import { GetAllUsers, GetCurrentUser } from '../apicalls/users';
 import { hideLoader, showLoader } from '../redux/loaderSlice';
 import { useSelector } from 'react-redux';
-import { SetUser } from '../redux/userSlice';
+import { SetUser, SetAllUsers } from '../redux/userSlice';
 import { FaUserCircle } from 'react-icons/fa';
+import { AiOutlineLogout } from 'react-icons/ai'
 
 
 function ProtectedRoute({ children }) {
@@ -19,9 +20,11 @@ function ProtectedRoute({ children }) {
           try {
                dispatch(showLoader());
                const response = await GetCurrentUser();
+               const allUsersResponse = await GetAllUsers();
                dispatch(hideLoader());
                if (response.success) {
                     dispatch(SetUser(response.data));
+                    dispatch(SetAllUsers(allUsersResponse.data));
                }
           } catch (error) {
                dispatch(hideLoader());
@@ -50,7 +53,14 @@ function ProtectedRoute({ children }) {
                     </div>
                     <div className='flex gap-1 items-center text-xl'>
                          <FaUserCircle className='text-xl' />
-                         <h2>{user?.name}</h2>
+                         <h2 className='underline'>{user?.name}</h2>
+                         <AiOutlineLogout
+                              className='text-xl ml-5 curse-pointer'
+                              onClick={() => {
+                                   localStorage.removeItem("token");
+                                   navigate('/login');
+                              }}
+                         />
                     </div>
                </div>
                {/* End Header */}
