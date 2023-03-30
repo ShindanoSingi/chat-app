@@ -1,34 +1,34 @@
 const router = require("express").Router();
-const chat = require("../models/chatModel");
-const message = require("../models/messageModel");
+const Chat = require("../models/chatModel");
+const Message = require("../models/messageModel");
 const authMiddleware = require("../middlewares/authMiddleware");
 
 // new message
 router.post("/new-message", authMiddleware, async (req, res) => {
      try {
-          // Store message
-          const newMessage = new message(req.body);
-          const savedMessage = await newMessage.save();
+          const newMessage = new Message(req.body);
+          await newMessage.save();
 
           // update last message of chat
-          await chat.findOneAndUpdate(
-               { _id: req.body.cha },
+          await Chat.findByIdAndUpdate(
+               { _id: req.body.chat },
                {
-                    lastMessage: savedMessage._id,
+                    lastMessage: newMessage._id,
                     unread: {
                          $inc: 1,
                     }
-               });
+               }
+          );
           res.send({
-               message: "Message sent successfully",
                success: true,
-               data: savedMessage,
+               message: "Message sent successfully",
+               data: newMessage,
           });
      } catch (error) {
           res.send({
-               message: "Message sent successfully",
-               success: true,
-               data: savedMessage,
+               success: false,
+               message: "Error sending message",
+               error: error.message,
           });
      }
 });
@@ -36,18 +36,18 @@ router.post("/new-message", authMiddleware, async (req, res) => {
 // get all messages of a chat
 router.get("/get-all-messages/:chatId", authMiddleware, async (req, res) => {
      try {
-          const messages = await message.find({
+          const messages = await Message.find({
                chat: req.params.chatId,
           }).sort({ createdAt: 1 });
           res.send({
-               message: "Messages fetched successfully",
                success: true,
+               message: "Messages retrieved successfully",
                data: messages,
           });
      } catch (error) {
           res.send({
                success: false,
-               message: "Messages fetched successfully",
+               message: "Error retrieving messages",
                error: error.message,
           });
      }

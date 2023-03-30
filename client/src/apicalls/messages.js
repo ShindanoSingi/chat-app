@@ -1,10 +1,12 @@
 import { axiosInstance } from ".";
 
-export const messages = (message) => {
+export const SendMessage = async (message) => {
      try {
-          const response = axiosInstance.post('/api/messages/new-message', message);
+
+          const response = await axiosInstance.post('/api/messages/new-message', message);
+          console.log(response);
           return response.data;
      } catch (error) {
           throw error;
-     };
+     }
 };

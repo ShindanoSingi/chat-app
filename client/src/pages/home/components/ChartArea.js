@@ -1,10 +1,42 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { RiSendPlaneFill } from 'react-icons/ri'
+import { SendMessage } from '../../../apicalls/messages';
+import { showLoader, hideLoader } from '../../../redux/loaderSlice';
+import { toast } from 'react-hot-toast';
 
 function ChartArea() {
+     const dispatch = useDispatch();
+     const [newMessage, setNewMessage] = useState('');
      const { selectedChat, user } = useSelector((state) => state.userReducer);
      const receipientUser = selectedChat.members.find((mem) => mem._id !== user._id);
+
+     const sendNewMessage = async () => {
+          try {
+               dispatch(showLoader());
+               const mes = {
+                    chat: selectedChat._id,
+                    sender: user._id,
+                    text: newMessage,
+               }
+
+               console.log(mes);
+
+               const response = await SendMessage(mes);
+               console.log(response);
+
+               dispatch(hideLoader());
+
+
+
+               if (response.success) {
+                    setNewMessage('');
+               }
+          } catch (error) {
+               dispatch(hideLoader());
+               toast.error(error.message);
+          };
+     };
 
      return (
           <div className='bg-white h-[80vh] border rounded-2xl w-full flex flex-col justify-between p-5'>
@@ -38,8 +70,13 @@ function ChartArea() {
                               type="text"
                               placeholder='Type a message'
                               className="w-[90%] border-0 h-full border-none rounded-xl focus:border-none"
+                              value={newMessage}
+                              onChange={(e) => setNewMessage(e.target.value)}
                          />
-                         <button className='bg-primary text-white p-3 rounded-xl px-6'>
+                         <button
+                              className='bg-primary text-white p-3 rounded-xl px-6'
+                              onClick={sendNewMessage}
+                         >
                               <RiSendPlaneFill className='text-2xl' />
                          </button>
                     </div>

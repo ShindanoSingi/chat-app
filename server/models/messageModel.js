@@ -9,7 +9,7 @@ const messageSchema = new mongoose.Schema({
           type: mongoose.Schema.Types.ObjectId,
           ref: 'users'
      },
-     test: {
+     text: {
           type: String,
           required: true,
      },
