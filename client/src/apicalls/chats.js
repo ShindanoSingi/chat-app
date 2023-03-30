@@ -14,7 +14,6 @@ export const CreateNewChat = async (members) => {
           const response = await axiosInstance.post('/api/chats/create-new-chat', {
                members
           });
-          console.log(response);
           return response.data;
      } catch (error) {
           throw (error);

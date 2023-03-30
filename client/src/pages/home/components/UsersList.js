@@ -20,6 +20,7 @@ function UsersList({ searchKey }) {
                     const newChat = response.data;
                     const updatedChats = [...allChats, newChat];
                     dispatch(SetAllChats(updatedChats));
+                    dispatch(SetSelectedChat(newChat));
                } else {
                     toast.error(response.message);
                }
@@ -30,32 +31,31 @@ function UsersList({ searchKey }) {
      };
 
      const openChat = (recipientUserId) => {
-          console.log(user._id);
-          console.log(recipientUserId);
-          console.log(allChats);
-          // const chat = allChats.find((chat) =>
-          //      chat.members.includes(user._id) &&
-          //      chat.members.includes(recipientUserId));
-          // if (chat) {
-          //      dispatch(SetSelectedChat(chat));
-          // } else {
-          //      createNewChat(recipientUserId);
-          // }
+          const chat = allChats.find((chat) =>
+               chat.members.includes(user._id) &&
+               chat.members.includes(recipientUserId));
+          if (chat) {
+               dispatch(SetSelectedChat(chat));
+          }
+     };
+
+     const getData = () => {
+          return allUsers.filter(
+               (userObj) =>
+                    (userObj.name.toLowerCase().includes(searchKey.toLowerCase()) &&
+                         searchKey) || allChats.some((chat) =>
+                              chat.members.map((mem) => mem._id).includes(userObj._id))
+          )
      };
 
      return (
           <div className='flex flex-col gap-1 mt-5'>
-               {allUsers.
-                    filter(
-                         (userObj) =>
-                              (userObj.name.toLowerCase().includes(searchKey.toLowerCase()) &&
-                                   searchKey) ||
-                              allChats.some((chat) => chat.members.includes(userObj._id)))
+               {getData()
                     .map((userObj) => {
                          return (
                               <div className='all-users shadow-sm border p-5 bg-white flex justify-between items-center'
                                    key={userObj._id}
-                              // onClick={() => openChat(userObj._id)}
+                                   onClick={() => openChat(userObj._id)}
                               >
                                    <div className='flex gap-5 items-center'>
                                         {userObj.profilePic && (
@@ -71,17 +71,14 @@ function UsersList({ searchKey }) {
                                              </div>)}
                                         <h1>{userObj.name}</h1>
                                    </div>
-                                   <div onClick={() => {
-                                        createNewChat(userObj._id)
-                                        openChat(userObj._id)
-                                   }}>
+                                   <div onClick={() => createNewChat(userObj._id)}>
                                         {
-                                             !allChats.find((chat) => chat.members.includes(userObj._id)) && (
+                                             !allChats.find((chat) => chat.members.map((mem) => mem._id).includes(userObj._id)) && (
                                                   <button className='border-primary border text-primary bg-white p-1 rounded-xl'>
                                                        Create Chat
                                                   </button>
-                                             )}
-
+                                             )
+                                        }
                                    </div>
                               </div>
                          )
