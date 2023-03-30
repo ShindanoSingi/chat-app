@@ -1,9 +1,10 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
-import { SetAllChats } from '../../../redux/userSlice';
+import { SetAllChats, SetSelectedChat } from '../../../redux/userSlice';
+import { showLoader, hideLoader } from '../../../redux/loaderSlice';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-hot-toast';
-import { showLoader, hideLoader } from '../../../redux/loaderSlice';
+
 import { CreateNewChat } from '../../../apicalls/chats';
 
 function UsersList({ searchKey }) {
@@ -26,16 +27,36 @@ function UsersList({ searchKey }) {
                dispatch(hideLoader());
                toast.error(error.message);
           }
-     }
+     };
+
+     const openChat = (recipientUserId) => {
+          console.log(user._id);
+          console.log(recipientUserId);
+          console.log(allChats);
+          // const chat = allChats.find((chat) =>
+          //      chat.members.includes(user._id) &&
+          //      chat.members.includes(recipientUserId));
+          // if (chat) {
+          //      dispatch(SetSelectedChat(chat));
+          // } else {
+          //      createNewChat(recipientUserId);
+          // }
+     };
 
      return (
           <div className='flex flex-col gap-1 mt-5'>
                {allUsers.
-                    filter((userObj) =>
-                         userObj.name.toLowerCase().includes(searchKey.toLowerCase()) && searchKey)
-                    .map((userObj, index) => {
+                    filter(
+                         (userObj) =>
+                              (userObj.name.toLowerCase().includes(searchKey.toLowerCase()) &&
+                                   searchKey) ||
+                              allChats.some((chat) => chat.members.includes(userObj._id)))
+                    .map((userObj) => {
                          return (
-                              <div key={index} className='all-users shadow-sm border p-5 bg-white flex justify-between items-center'>
+                              <div className='all-users shadow-sm border p-5 bg-white flex justify-between items-center'
+                                   key={userObj._id}
+                              // onClick={() => openChat(userObj._id)}
+                              >
                                    <div className='flex gap-5 items-center'>
                                         {userObj.profilePic && (
                                              <img
@@ -50,12 +71,13 @@ function UsersList({ searchKey }) {
                                              </div>)}
                                         <h1>{userObj.name}</h1>
                                    </div>
-                                   <div
-                                        onClick={() => createNewChat(userObj._id)}
-                                   >
+                                   <div onClick={() => {
+                                        createNewChat(userObj._id)
+                                        openChat(userObj._id)
+                                   }}>
                                         {
                                              !allChats.find((chat) => chat.members.includes(userObj._id)) && (
-                                                  <button className='border-primary border text-primary bg-white p-1 rounded'>
+                                                  <button className='border-primary border text-primary bg-white p-1 rounded-xl'>
                                                        Create Chat
                                                   </button>
                                              )}
