@@ -8,7 +8,7 @@ import { toast } from 'react-hot-toast';
 import { CreateNewChat } from '../../../apicalls/chats';
 
 function UsersList({ searchKey }) {
-     const { allUsers, allChats, user } = useSelector((state) => state.userReducer);
+     const { allUsers, allChats, user, selectedChat } = useSelector((state) => state.userReducer);
      const dispatch = useDispatch();
      const createNewChat = async (recipientUserId) => {
           try {
@@ -32,8 +32,8 @@ function UsersList({ searchKey }) {
 
      const openChat = (recipientUserId) => {
           const chat = allChats.find((chat) =>
-               chat.members.includes(user._id) &&
-               chat.members.includes(recipientUserId));
+               chat.members.map((mem) => mem._id).includes(user._id) &&
+               chat.members.map((mem) => mem._id).includes(recipientUserId));
           if (chat) {
                dispatch(SetSelectedChat(chat));
           }
@@ -44,8 +44,15 @@ function UsersList({ searchKey }) {
                (userObj) =>
                     (userObj.name.toLowerCase().includes(searchKey.toLowerCase()) &&
                          searchKey) || allChats.some((chat) =>
-                              chat.members.map((mem) => mem._id).includes(userObj._id))
+                              chat.members?.map((mem) => mem._id).includes(userObj._id))
           )
+     };
+
+     const getIsSelectedChatOrNot = (userObj) => {
+          if (selectedChat) {
+               return selectedChat.members?.map((mem) => mem._id).includes(userObj._id)
+          }
+          return false;
      };
 
      return (
@@ -53,7 +60,9 @@ function UsersList({ searchKey }) {
                {getData()
                     .map((userObj) => {
                          return (
-                              <div className='all-users shadow-sm border p-5 bg-white flex justify-between items-center'
+                              <div className={`all-users shadow-sm border p-3 bg-white flex justify-between items-center cursor-pointer
+                                   ${getIsSelectedChatOrNot(userObj) && 'border-primary border-2'}
+                              `}
                                    key={userObj._id}
                                    onClick={() => openChat(userObj._id)}
                               >
@@ -67,7 +76,7 @@ function UsersList({ searchKey }) {
                                         )}
                                         {!userObj.profilePic && (
                                              <div className='bg-gray-500 text-white rounded-full h-10 w-10 flex items-center justify-center'>
-                                                  <h1 className='uppercase text-2xl font-semibold'>{userObj.name[0]}</h1>
+                                                  <h1 className='uppercase text-xl font-semibold'>{userObj.name[0]}</h1>
                                              </div>)}
                                         <h1>{userObj.name}</h1>
                                    </div>
@@ -83,7 +92,7 @@ function UsersList({ searchKey }) {
                               </div>
                          )
                     })}
-          </div>
+          </div >
      )
 }
 

@@ -35,14 +35,14 @@ input:focus{
 }
 
 .all-users:first-child{
-     border-top-right-radius: 30px;
+     border-top-right-radius: 15px;
 }
 .all-users:first-child{
-     border-top-left-radius: 30px;
+     border-top-left-radius: 15px;
 }
 .all-users:last-child{
-     border-bottom-right-radius: 30px;
+     border-bottom-right-radius: 15px;
 }
 .all-users:last-child{
-     border-bottom-left-radius: 30px;
+     border-bottom-left-radius: 15px;
 }
