@@ -55,6 +55,17 @@ function UsersList({ searchKey }) {
           return false;
      };
 
+     const getLastMsg = (userObj) => {
+          const chat = allChats.find((chat) =>
+               chat.members.map((mem) => mem._id).includes(userObj._id)
+          );
+          if (!chat) {
+               return '';
+          } else {
+               return chat.lastMessage;
+          };
+     };
+
      return (
           <div className='flex flex-col gap-1 mt-5'>
                {getData()
@@ -78,7 +89,10 @@ function UsersList({ searchKey }) {
                                              <div className='bg-gray-500 text-white rounded-full h-10 w-10 flex items-center justify-center'>
                                                   <h1 className='uppercase text-xl font-semibold'>{userObj.name[0]}</h1>
                                              </div>)}
-                                        <h1>{userObj.name}</h1>
+                                        <div className='flex flex-col gap-1'>
+                                             <h1>{userObj.name}</h1>
+                                             <h1>{getLastMsg(userObj)}</h1>
+                                        </div>
                                    </div>
                                    <div onClick={() => createNewChat(userObj._id)}>
                                         {
