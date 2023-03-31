@@ -1,34 +1,29 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RiSendPlaneFill } from 'react-icons/ri'
-import { SendMessage } from '../../../apicalls/messages';
+import { GetMessages, SendMessage } from '../../../apicalls/messages';
 import { showLoader, hideLoader } from '../../../redux/loaderSlice';
 import { toast } from 'react-hot-toast';
+import moment from 'moment';
+
 
 function ChartArea() {
      const dispatch = useDispatch();
      const [newMessage, setNewMessage] = useState('');
+     const [messages, setMessages] = useState([]);
      const { selectedChat, user } = useSelector((state) => state.userReducer);
      const receipientUser = selectedChat.members.find((mem) => mem._id !== user._id);
 
      const sendNewMessage = async () => {
           try {
                dispatch(showLoader());
-               const mes = {
+               const message = {
                     chat: selectedChat._id,
                     sender: user._id,
                     text: newMessage,
-               }
-
-               console.log(mes);
-
-               const response = await SendMessage(mes);
-               console.log(response);
-
+               };
+               const response = await SendMessage(message);
                dispatch(hideLoader());
-
-
-
                if (response.success) {
                     setNewMessage('');
                }
@@ -37,6 +32,24 @@ function ChartArea() {
                toast.error(error.message);
           };
      };
+
+     const getMessages = async () => {
+          try {
+               dispatch(showLoader());
+               const response = await GetMessages(selectedChat._id);
+               dispatch(hideLoader());
+               if (response.success) {
+                    setMessages(response.data);
+               }
+          } catch (error) {
+               dispatch(hideLoader());
+               toast.error(error.message);
+          };
+     };
+
+     useEffect(() => {
+          getMessages();
+     }, [selectedChat]);
 
      return (
           <div className='bg-white h-[80vh] border rounded-2xl w-full flex flex-col justify-between p-5'>
@@ -60,8 +73,20 @@ function ChartArea() {
                </div>
 
                {/* 2nd part chat messages */}
-               <div>
-                    Chat Messages
+               <div className='h-[62vh] overflow-scroll px-5 scrollbar-hide'>
+                    <div className='flex flex-col gap-2'>
+                         {
+                              messages.map((message) => {
+                                   const isCurrentUserIsSender = message.sender === user._id;
+                                   return <div className={`flex ${isCurrentUserIsSender && 'justify-end'}`} >
+                                        <div className='flex flex-col'>
+                                             <h1 className={`${isCurrentUserIsSender ? 'bg-primary text-white rounded-bl-none max-w-xs' : 'bg-gray-300 text-primary max-w-xs rounded-tl-none'} p-2 rounded-xl `} >{message.text}</h1>
+                                             <h1 className='text-xs text-gray-500'>{moment(message.createdAt).format('hh:mm A')}</h1>
+                                        </div>
+                                   </div>
+                              })
+                         }
+                    </div>
                </div>
                {/* 3rd part chat input */}
                <div>

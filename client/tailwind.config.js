@@ -7,8 +7,10 @@ module.exports = {
     extend: {
       colors: {
         primary: '#003300',
-      }
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar-hide'),
+  ],
 }
