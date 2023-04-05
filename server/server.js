@@ -11,8 +11,17 @@ const messagesRoute = require('./routes/messagesRoutes');
 
 app.use(express.json());
 
+const server = require('http').createServer(app);
+
+const io = require('socket.io')(server, {
+    cors: {
+        origin: 'http://localhost:3008',
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    },
+});
+
 app.use('/api/users', usersRoute);
 app.use('/api/chats', chatsRoute);
 app.use('/api/messages', messagesRoute);
 
-app.listen(PORT, () => console.log(`App is running on port ${PORT}.`));
+server.listen(PORT, () => console.log(`App is running on port ${PORT}.`));

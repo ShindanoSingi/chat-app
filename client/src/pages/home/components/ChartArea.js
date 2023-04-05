@@ -10,7 +10,7 @@ import { SetAllChats } from '../../../redux/userSlice';
 import { IoCheckmarkDoneSharp } from 'react-icons/io5';
 
 
-function ChartArea() {
+function ChartArea({ socket }) {
      const [newMessage, setNewMessage] = useState('');
      const [messages, setMessages] = useState([]);
      const { selectedChat, user, allChats } = useSelector((state) => state.userReducer);
