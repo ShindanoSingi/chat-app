@@ -20,6 +20,22 @@ const io = require('socket.io')(server, {
     },
 });
 
+// Check the connection f socket from client
+io.on('connection', (socket) => {
+    // socket events will be here
+    socket.on('join-room', (userId) => {
+        console.log('User joined the room: ', userId);
+        socket.join(userId);
+    });
+    socket.on('send-message', ({ text, sender, receipient }) => {
+        socket.to(receipient).emit('receive-message', {
+            text,
+            sender,
+            receipient,
+        });
+    });
+});
+
 app.use('/api/users', usersRoute);
 app.use('/api/chats', chatsRoute);
 app.use('/api/messages', messagesRoute);
