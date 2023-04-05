@@ -5,14 +5,17 @@ import { GetMessages, SendMessage } from '../../../apicalls/messages';
 import { showLoader, hideLoader } from '../../../redux/loaderSlice';
 import { toast } from 'react-hot-toast';
 import moment from 'moment';
+import { clearChatMessages } from '../../../apicalls/chats';
+import { SetAllChats } from '../../../redux/userSlice';
 
 
 function ChartArea() {
-     const dispatch = useDispatch();
      const [newMessage, setNewMessage] = useState('');
      const [messages, setMessages] = useState([]);
-     const { selectedChat, user } = useSelector((state) => state.userReducer);
+     const { selectedChat, user, allChats } = useSelector((state) => state.userReducer);
+     const dispatch = useDispatch();
      const receipientUser = selectedChat.members.find((mem) => mem._id !== user._id);
+
 
      const sendNewMessage = async () => {
           try {
@@ -47,11 +50,29 @@ function ChartArea() {
           };
      };
 
+     const clearUnreadMessages = async () => {
+          try {
+               dispatch(showLoader());
+               const response = await clearChatMessages(selectedChat._id);
+               dispatch(hideLoader());
+               if (response.success) {
+                    const updatedChats = allChats.map((chat) => {
+                         if (chat._id === selectedChat._id) {
+                              return response.data;
+                         }
+                         return chat;
+                    });
+                    dispatch(SetAllChats(updatedChats));
+               }
+          } catch (error) {
+               dispatch(hideLoader());
+               toast.error(error.message);
+          };
+     };
+
      useEffect(() => {
           getMessages();
-          if (selectedChat.lastMessage.sender !== user.id) {
-               clearUnreadMessages();
-          }
+          clearUnreadMessages();
      }, [selectedChat]);
 
      return (
@@ -81,7 +102,7 @@ function ChartArea() {
                          {
                               messages.map((message) => {
                                    const isCurrentUserIsSender = message.sender === user._id;
-                                   return <div className={`flex ${isCurrentUserIsSender && 'justify-end'}`} >
+                                   return <div key={message._id} className={`flex ${isCurrentUserIsSender && 'justify-end'}`} >
                                         <div className='flex flex-col'>
                                              <h1 className={`${isCurrentUserIsSender ? 'bg-primary text-white rounded-bl-none max-w-xs' : 'bg-gray-300 text-primary max-w-xs rounded-tl-none'} p-2 rounded-xl `} >{message.text}</h1>
                                              <h1 className='text-xs text-gray-500'>{moment(message.createdAt).format('hh:mm A')}</h1>

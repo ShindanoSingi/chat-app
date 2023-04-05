@@ -65,7 +65,7 @@ router.post('/clear-unread-messages', authMiddleware, async (req, res) => {
                     unreadMessages: 0,
                },
                { new: true }
-          );
+          ).populate('members').populate('lastMessage');
 
           // find all unread messages of the chat and update them to read
           await messages.updateMany(

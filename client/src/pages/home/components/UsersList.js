@@ -84,7 +84,9 @@ function UsersList({ searchKey }) {
         );
         if (chat && chat?.unreadMessages && chat?.lastMessage?.sender !== user._id) {
             return (
-                <div className='bg-blue-500 text-white rounded-full px-[9px]'>
+                <div className='bg-blue-500 text-white rounded-full px-[9px]'
+                    key={chat._id}
+                >
                     {chat?.unreadMessages}
                 </div>
             )
@@ -116,13 +118,13 @@ function UsersList({ searchKey }) {
                                 {
                                     !userObj.profilePic &&
                                     (
-                                        <div className='bg-gray-500 text-white rounded-full h-10 w-10 flex items-center justify-center'>
+                                        <div className='bg-gray-500 text-white rounded-full h-10 w-10 flex p-3 items-center justify-center'>
                                             <h1 className='uppercase text-xl font-semibold'>{userObj.name[0]}
                                             </h1>
                                         </div>
                                     )
                                 }
-                                <div className='flex flex-col gap-1 w-80'>
+                                <div className='flex flex-col gap-1 w-90'>
                                     <div className='flex gap-1'>
                                         <h1>{userObj.name}</h1>
                                         {getUnreadMessages(userObj)}
@@ -133,7 +135,9 @@ function UsersList({ searchKey }) {
                             <div onClick={() => createNewChat(userObj._id)}>
                                 {
                                     !allChats.find((chat) => chat.members.map((mem) => mem._id).includes(userObj._id)) && (
-                                        <button className='border-primary border text-primary bg-white p-1 rounded-xl'>
+                                        <button className='border-primary border text-primary bg-white p-1 rounded-xl'
+                                            key={userObj._id}
+                                        >
                                             Create Chat
                                         </button>
                                     )
