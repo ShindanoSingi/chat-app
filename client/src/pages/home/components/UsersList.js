@@ -66,11 +66,11 @@ function UsersList({ searchKey }) {
         } else {
             const lastMsgPerson = chats.lastMessage?.sender === user._id ? 'You:' : "";
             return (
-                <div className='flex justify-between w-full'>
-                    <h1 className='text-gray-600 text-sm'>
+                <div className='flex justify-between gap-8'>
+                    <h1 className='text-gray-600 truncate line-clamp-1 text-sm w-48'>
                         {lastMsgPerson} {chats.lastMessage?.text}
                     </h1>
-                    <h1 className='text-gray-500 text-sm'>
+                    <h1 className='text-gray-500 text-sm w-15'>
                         {moment(chats.lastMessage?.createdAt).format('hh:mm A')}
                     </h1>
                 </div>
@@ -94,9 +94,14 @@ function UsersList({ searchKey }) {
     };
 
     return (
-        <div className='flex flex-col gap-1 mt-5 w-96'>
+        <div className='flex flex-col gap-2 mt-5 w-96'>
             {getData()
-                .map((userObj) => {
+                .map((chatObjOrUserObj) => {
+                    let userObj = chatObjOrUserObj;
+
+                    if (chatObjOrUserObj.members) {
+                        userObj = chatObjOrUserObj.members.find((mem) => mem._id !== user._id);
+                    };
                     return (
                         <div className={`all-users shadow-sm w-full border p-3 bg-white flex justify-between items-center cursor-pointer
                                    ${getIsSelectedChatOrNot(userObj) && 'border-primary border-2'}
@@ -104,7 +109,7 @@ function UsersList({ searchKey }) {
                             key={userObj._id}
                             onClick={() => openChat(userObj._id)}
                         >
-                            <div className='flex gap-5 items-center w-full'>
+                            <div className='flex gap-5 h-12 items-center'>
                                 {
                                     userObj.profilePic &&
                                     (
@@ -118,14 +123,14 @@ function UsersList({ searchKey }) {
                                 {
                                     !userObj.profilePic &&
                                     (
-                                        <div className='bg-gray-500 text-white rounded-full h-10 w-10 flex p-3 items-center justify-center'>
+                                        <div className='bg-gray-500 text-white rounded-full h-10 w-10 flex p-5 items-center justify-center'>
                                             <h1 className='uppercase text-xl font-semibold'>{userObj.name[0]}
                                             </h1>
                                         </div>
                                     )
                                 }
-                                <div className='flex flex-col gap-1 w-90'>
-                                    <div className='flex gap-1 w-72'>
+                                <div className='flex flex-col gap-1 w-full'>
+                                    <div className='flex gap-4 w-full'>
                                         <h1>{userObj.name}</h1>
                                         {getUnreadMessages(userObj)}
                                     </div>
@@ -135,7 +140,7 @@ function UsersList({ searchKey }) {
                             <div onClick={() => createNewChat(userObj._id)}>
                                 {
                                     !allChats.find((chat) => chat.members.map((mem) => mem._id).includes(userObj._id)) && (
-                                        <button className='border-primary border text-primary bg-white p-1 rounded-xl'
+                                        <button className='border-primary border text-primary bg-white p-1 rounded-lg'
                                             key={userObj._id}
                                         >
                                             Create Chat

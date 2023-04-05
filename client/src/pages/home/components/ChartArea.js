@@ -73,7 +73,7 @@ function ChartArea() {
 
      useEffect(() => {
           getMessages();
-          if (selectedChat.lastMessage?.sender !== user._id) {
+          if (selectedChat?.lastMessage?.sender !== user._id) {
                clearUnreadMessages();
           }
      }, [selectedChat]);

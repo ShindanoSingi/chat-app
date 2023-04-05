@@ -49,10 +49,10 @@ function ProtectedRoute({ children }) {
      return (
           <div className='h-screen w-screen bg-gray-100 p-2'>
                {/* Header */}
-               <div className='flex justify-between p-5'>
+               <div className='flex justify-between p-5 bg-primary text-white rounded'>
                     <div className='flex items-center gap-1'>
                          <i className="ri-wechat-fill text-3xl"></i>
-                         <h1 className='text-primary text-2xl uppercase font-semibold'>Bembe-Chat</h1>
+                         <h1 className=' text-2xl text-white uppercase font-semibold'>Bembe-Chat</h1>
                     </div>
                     <div className='flex gap-1 items-center text-xl'>
                          <FaUserCircle className='text-xl' />

@@ -9,6 +9,10 @@ router.post('/create-new-chat', authMiddleware, async (req, res) => {
      try {
           const newChat = new chats(req.body);
           const savedChat = await newChat.save();
+
+          // populate members and last message in saved chat
+          await savedChat.populate('members');
+
           res.send({
                success: true,
                message: 'Chat created successfully',
@@ -34,7 +38,6 @@ router.get('/get-all-chats', authMiddleware, async (req, res) => {
                .populate('members')
                .populate('lastMessage')
                .sort({ updatedAt: -1 });
-
 
           res.send({
                success: true,
