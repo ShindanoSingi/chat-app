@@ -7,22 +7,20 @@ const authMiddleware = require("../middlewares/authMiddleware");
 router.post("/new-message", authMiddleware, async (req, res) => {
      try {
           const newMessage = new Message(req.body);
-          await newMessage.save();
+          const savedMessage = await newMessage.save();
 
           // update last message of chat
           await Chat.findByIdAndUpdate(
                { _id: req.body.chat },
                {
-                    lastMessage: newMessage._id,
-                    unread: {
-                         $inc: 1,
-                    }
+                    lastMessage: savedMessage._id,
+                    $inc: { unreadMessages: 1 },
                }
           );
           res.send({
                success: true,
                message: "Message sent successfully",
-               data: newMessage,
+               data: savedMessage,
           });
      } catch (error) {
           res.send({
