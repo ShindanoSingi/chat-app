@@ -125,7 +125,7 @@ function UsersList({ searchKey }) {
                                     )
                                 }
                                 <div className='flex flex-col gap-1 w-90'>
-                                    <div className='flex gap-1'>
+                                    <div className='flex gap-1 w-72'>
                                         <h1>{userObj.name}</h1>
                                         {getUnreadMessages(userObj)}
                                     </div>

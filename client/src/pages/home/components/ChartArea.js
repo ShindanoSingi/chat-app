@@ -7,6 +7,7 @@ import { toast } from 'react-hot-toast';
 import moment from 'moment';
 import { clearChatMessages } from '../../../apicalls/chats';
 import { SetAllChats } from '../../../redux/userSlice';
+import { IoCheckmarkDoneSharp } from 'react-icons/io5';
 
 
 function ChartArea() {
@@ -72,7 +73,9 @@ function ChartArea() {
 
      useEffect(() => {
           getMessages();
-          clearUnreadMessages();
+          if (selectedChat.lastMessage?.sender !== user._id) {
+               clearUnreadMessages();
+          }
      }, [selectedChat]);
 
      return (
@@ -102,14 +105,21 @@ function ChartArea() {
                          {
                               messages.map((message) => {
                                    const isCurrentUserIsSender = message.sender === user._id;
-                                   return <div key={message._id} className={`flex ${isCurrentUserIsSender && 'justify-end'}`} >
-                                        <div className='flex flex-col'>
-                                             <h1 className={`${isCurrentUserIsSender ? 'bg-primary text-white rounded-bl-none max-w-xs' : 'bg-gray-300 text-primary max-w-xs rounded-tl-none'} p-2 rounded-xl `} >{message.text}</h1>
-                                             <h1 className='text-xs text-gray-500'>{moment(message.createdAt).format('hh:mm A')}</h1>
+                                   return (
+                                        <div key={message._id} className={`flex ${isCurrentUserIsSender && 'justify-end'}`} >
+                                             <div className='flex flex-col'>
+                                                  <h1 className={`${isCurrentUserIsSender ? 'bg-primary text-white rounded-bl-none max-w-xs' : 'bg-gray-300 text-primary max-w-xs rounded-tl-none'} p-2 rounded-xl `} >
+                                                       {message.text}
+                                                  </h1>
+                                                  <h1 className='text-xs text-gray-500'>
+                                                       {moment(message.createdAt).format('hh:mm A')}
+                                                  </h1>
+
+                                             </div>
+                                             {isCurrentUserIsSender && <IoCheckmarkDoneSharp className={`text-3xl p-1 ${message.read ? 'text-green-700' : 'text-gray-400'}`} />}
                                         </div>
-                                   </div>
-                              })
-                         }
+                                   )
+                              })}
                     </div>
                </div>
                {/* 3rd part chat input */}
