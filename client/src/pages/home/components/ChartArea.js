@@ -8,6 +8,7 @@ import moment from 'moment';
 import { clearChatMessages } from '../../../apicalls/chats';
 import { SetAllChats } from '../../../redux/userSlice';
 import { IoCheckmarkDoneSharp } from 'react-icons/io5';
+import store from '../../../redux/store';
 
 
 function ChartArea({ socket }) {
@@ -88,11 +89,20 @@ function ChartArea({ socket }) {
           }
 
           // receive message from server using socket.
-          socket.on('receive-message', (message) => {
-               setMessages((prev) => [...prev, message]);
+          socket.off('receive message').on('receive-message', (message) => {
+               const tempSelectedChat = store.getState().userReducer.selectedChat;
+               if (tempSelectedChat._id === message.chat) {
+                    setMessages((messages) => [...messages, message]);
+               }
           });
 
      }, [selectedChat]);
+
+     // Scroll to bottom of the messages.
+     useEffect(() => {
+          const messagesContainer = document.getElementById('messages');
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
+     }, [messages]);
 
      return (
           <div className='bg-white h-[80vh] border rounded-2xl w-full flex flex-col justify-between p-5'>
@@ -116,7 +126,9 @@ function ChartArea({ socket }) {
                </div>
 
                {/* 2nd part chat messages */}
-               <div className='h-[62vh] overflow-scroll px-5 scrollbar-hide'>
+               <div className='h-[62vh] overflow-scroll px-5 scrollbar-hide'
+                    id='messages'
+               >
                     <div className='flex flex-col gap-2'>
                          {
                               messages.map((message) => {
