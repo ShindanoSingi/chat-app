@@ -4,10 +4,9 @@ import ChartArea from './components/ChartArea'
 import UserSearch from './components/UserSearch'
 import UsersList from './components/UsersList';
 import { io } from 'socket.io-client';
+const socket = io('http://localhost:5000');
 
 function Home() {
-    const socket = io('http://localhost:5000');
-
     const [searchKey, setSearchKey] = useState('');
     const { selectedChat, user } = useSelector((state) => state.userReducer);
 
@@ -15,17 +14,6 @@ function Home() {
         // join the room
         if (user) {
             socket.emit('join-room', user._id);
-            // send new message to receipient  Salima
-            socket.emit('send-message', {
-                message: 'Hi Salima, I am Anna',
-                sender: user._id,
-                receipient: '64238933e9b38082428f5867',
-            });
-
-            // receive message from recipient Salima 642130155402fa264cf8acaf
-            socket.on('receive-message', (data) => {
-                console.log('data', data);
-            });
         }
     }, [user]);
 

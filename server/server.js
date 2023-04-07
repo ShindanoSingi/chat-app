@@ -16,7 +16,7 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server, {
     cors: {
         origin: 'http://localhost:3008',
-        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        methods: ['GET', 'POST'],
     },
 });
 
@@ -24,12 +24,13 @@ const io = require('socket.io')(server, {
 io.on('connection', (socket) => {
     // socket events will be here
     socket.on('join-room', (userId) => {
-        console.log('User joined the room: ', userId);
         socket.join(userId);
     });
     // Send message to clients (who are present in members array)
     socket.on('send-message', (message) => {
-        io.to(message.members[0]).to(message.members[1]).emit('receive-message', message);
+        io.to(message.members[0])
+            .to(message.members[1])
+            .emit('receive-message', message);
     });
 });
 

@@ -20,7 +20,6 @@ function ChartArea({ socket }) {
 
      const sendNewMessage = async () => {
           try {
-               dispatch(showLoader());
                const message = {
                     chat: selectedChat._id,
                     sender: user._id,
@@ -30,7 +29,7 @@ function ChartArea({ socket }) {
                // Send message to the server using socket.
                socket.emit('send-message', {
                     ...message,
-                    members: selectedChat.members.map((mem) => mem._id),
+                    members: selectedChat?.members?.map((mem) => mem._id),
                     createdAt: moment().format('YYYY-MM-DD HH:mm:ss'),
                     read: false,
                });
@@ -38,12 +37,12 @@ function ChartArea({ socket }) {
                // Send message to the server using socket.
 
                const response = await SendMessage(message);
-               dispatch(hideLoader());
+
                if (response.success) {
                     setNewMessage('');
                }
           } catch (error) {
-               dispatch(hideLoader());
+
                toast.error(error.message);
           };
      };
