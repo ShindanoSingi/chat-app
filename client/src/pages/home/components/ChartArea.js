@@ -26,6 +26,17 @@ function ChartArea({ socket }) {
                     sender: user._id,
                     text: newMessage,
                };
+
+               // Send message to the server using socket.
+               socket.emit('send-message', {
+                    ...message,
+                    members: selectedChat.members.map((mem) => mem._id),
+                    createdAt: moment().format('YYYY-MM-DD HH:mm:ss'),
+                    read: false,
+               });
+
+               // Send message to the server using socket.
+
                const response = await SendMessage(message);
                dispatch(hideLoader());
                if (response.success) {
@@ -76,6 +87,12 @@ function ChartArea({ socket }) {
           if (selectedChat?.lastMessage?.sender !== user._id) {
                clearUnreadMessages();
           }
+
+          // receive message from server using socket.
+          socket.on('receive-message', (message) => {
+               setMessages((prev) => [...prev, message]);
+          });
+
      }, [selectedChat]);
 
      return (

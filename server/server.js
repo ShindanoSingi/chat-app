@@ -27,12 +27,9 @@ io.on('connection', (socket) => {
         console.log('User joined the room: ', userId);
         socket.join(userId);
     });
-    socket.on('send-message', ({ text, sender, receipient }) => {
-        socket.to(receipient).emit('receive-message', {
-            text,
-            sender,
-            receipient,
-        });
+    // Send message to clients (who are present in members array)
+    socket.on('send-message', (message) => {
+        io.to(message.members[0]).to(message.members[1]).emit('receive-message', message);
     });
 });
 
