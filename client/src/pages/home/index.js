@@ -28,12 +28,12 @@ function Home() {
                 <UsersList searchKey={searchKey} />
             </div>
             {/* 2nd part: chatbox  */}
-            <div className='w-full'>
-                {selectedChat && <  ChartArea
-                    socket={socket}
-                />}
-            </div>
 
+            {selectedChat && (
+                <div className='w-full'>
+                    <  ChartArea socket={socket} />
+                </div>
+            )}
         </div>
     )
 }

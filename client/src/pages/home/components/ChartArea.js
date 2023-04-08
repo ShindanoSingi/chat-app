@@ -64,6 +64,12 @@ function ChartArea({ socket }) {
 
      const clearUnreadMessages = async () => {
           try {
+
+               socket.emit('clear-unread-messages', {
+                    chat: selectedChat._id,
+                    members: selectedChat?.members?.map((mem) => mem._id),
+               })
+
                dispatch(showLoader());
                const response = await clearChatMessages(selectedChat._id);
                dispatch(hideLoader());
@@ -93,6 +99,39 @@ function ChartArea({ socket }) {
                const tempSelectedChat = store.getState().userReducer.selectedChat;
                if (tempSelectedChat._id === message.chat) {
                     setMessages((messages) => [...messages, message]);
+               }
+
+               if (tempSelectedChat._id === message.chat && message.sender !== user._id) {
+                    clearUnreadMessages();
+               }
+          });
+
+          // clear unread messages from server using socket.
+          socket.on('unread-messages-cleared', (data) => {
+               const tempAllChats = store.getState().userReducer.allChats;
+               const tempSelectedChat = store.getState().userReducer.selectedChat;
+
+               if (data.chat === tempSelectedChat._id) {
+                    const updatedChats = tempAllChats.map((chat) => {
+                         if (chat._id === data.chat) {
+                              return {
+                                   ...chat,
+                                   unreadMessages: 0,
+                              };
+                         }
+                         return chat;
+                    });
+                    dispatch(SetAllChats(updatedChats));
+
+                    // Set all message as read.
+                    setMessages((prevMessages) => {
+                         return prevMessages.map(message => {
+                              return {
+                                   ...message,
+                                   read: true
+                              }
+                         });
+                    });
                }
           });
 

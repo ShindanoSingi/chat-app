@@ -119,62 +119,61 @@ function UsersList({ searchKey }) {
 
     return (
         <div className='flex flex-col gap-2 mt-5 w-96'>
-            {getData()
-                .map((chatObjOrUserObj) => {
-                    let userObj = chatObjOrUserObj;
+            {getData().map((chatObjOrUserObj) => {
+                let userObj = chatObjOrUserObj;
 
-                    if (chatObjOrUserObj.members) {
-                        userObj = chatObjOrUserObj.members.find((mem) => mem._id !== user._id);
-                    };
-                    return (
-                        <div className={`all-users shadow-sm w-full border p-3 bg-white flex justify-between items-center cursor-pointer
+                if (chatObjOrUserObj.members) {
+                    userObj = chatObjOrUserObj.members.find((mem) => mem._id !== user._id);
+                };
+                return (
+                    <div className={`all-users shadow-sm w-full border p-3 bg-white flex justify-between items-center cursor-pointer
                                    ${getIsSelectedChatOrNot(userObj) && 'border-primary border-2'}
                               `}
-                            key={userObj._id}
-                            onClick={() => openChat(userObj._id)}
-                        >
-                            <div className='flex gap-5 h-12 items-center'>
-                                {
-                                    userObj.profilePic &&
-                                    (
-                                        <img
-                                            src={userObj.profilePic}
-                                            alt='profile pic'
-                                            className='rounded-full h-10 w-10'
-                                        />
-                                    )
-                                }
-                                {
-                                    !userObj.profilePic &&
-                                    (
-                                        <div className='bg-gray-500 text-white rounded-full h-10 w-10 flex p-5 items-center justify-center'>
-                                            <h1 className='uppercase text-xl font-semibold'>{userObj.name[0]}
-                                            </h1>
-                                        </div>
-                                    )
-                                }
-                                <div className='flex flex-col gap-1 w-full'>
-                                    <div className='flex gap-4 w-full'>
-                                        <h1>{userObj.name}</h1>
-                                        {getUnreadMessages(userObj)}
+                        key={userObj._id}
+                        onClick={() => openChat(userObj._id)}
+                    >
+                        <div className='flex gap-5 h-12 items-center'>
+                            {
+                                userObj.profilePic &&
+                                (
+                                    <img
+                                        src={userObj.profilePic}
+                                        alt='profile pic'
+                                        className='rounded-full h-10 w-10'
+                                    />
+                                )
+                            }
+                            {
+                                !userObj.profilePic &&
+                                (
+                                    <div className='bg-gray-500 text-white rounded-full h-10 w-10 flex p-5 items-center justify-center'>
+                                        <h1 className='uppercase text-xl font-semibold'>{userObj.name[0]}
+                                        </h1>
                                     </div>
-                                    {getLastMsg(userObj)}
+                                )
+                            }
+                            <div className='flex flex-col gap-1 w-full'>
+                                <div className='flex gap-4 w-full'>
+                                    <h1>{userObj.name}</h1>
+                                    {getUnreadMessages(userObj)}
                                 </div>
-                            </div>
-                            <div onClick={() => createNewChat(userObj._id)}>
-                                {
-                                    !allChats.find((chat) => chat.members.map((mem) => mem._id).includes(userObj._id)) && (
-                                        <button className='border-primary border text-primary bg-white p-1 rounded-lg'
-                                            key={userObj._id}
-                                        >
-                                            Create Chat
-                                        </button>
-                                    )
-                                }
+                                {getLastMsg(userObj)}
                             </div>
                         </div>
-                    )
-                })}
+                        <div onClick={() => createNewChat(userObj._id)}>
+                            {
+                                !allChats.find((chat) => chat.members.map((mem) => mem._id).includes(userObj._id)) && (
+                                    <button className='border-primary border text-primary bg-white p-1 rounded-lg'
+                                        key={userObj._id}
+                                    >
+                                        Create Chat
+                                    </button>
+                                )
+                            }
+                        </div>
+                    </div>
+                )
+            })}
         </div >
     )
 }
