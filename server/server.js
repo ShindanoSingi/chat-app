@@ -15,7 +15,7 @@ const server = require('http').createServer(app);
 
 const io = require('socket.io')(server, {
     cors: {
-        origin: 'http://localhost:3008',
+        origin: 'http://localhost:3009',
         methods: ['GET', 'POST'],
     },
 });
@@ -37,6 +37,13 @@ io.on('connection', (socket) => {
         io.to(data.members[0])
             .to(data.members[1])
             .emit('unread-messages-cleared', data);
+    });
+
+    // Typing event
+    socket.on('typing', (data) => {
+        io.to(data.members[0])
+            .to(data.members[1])
+            .emit('typing', data);
     });
 });
 

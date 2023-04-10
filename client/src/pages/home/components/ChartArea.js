@@ -12,6 +12,7 @@ import store from '../../../redux/store';
 
 
 function ChartArea({ socket }) {
+     const [isRecipientTyping, setIsRecipientTyping] = useState(false);
      const [newMessage, setNewMessage] = useState('');
      const [messages, setMessages] = useState([]);
      const { selectedChat, user, allChats } = useSelector((state) => state.userReducer);
@@ -135,6 +136,14 @@ function ChartArea({ socket }) {
                }
           });
 
+          // receive typing from server using socket.
+          socket.on('typing', (data) => {
+               const selectedChat = store.getState().userReducer.selectedChat;
+               if (data.chat === selectedChat._id && data.sender !== user._id) {
+                    setIsRecipientTyping(true);
+               }
+          });
+
      }, [selectedChat]);
 
      // Scroll to bottom of the messages.
@@ -187,8 +196,16 @@ function ChartArea({ socket }) {
                                         </div>
                                    )
                               })}
+                         {
+                              isRecipientTyping && (
+                                   <h1 className='bg-gray-300 text-primary rounded-tr-none p-2 rounded-xl'>
+                                        Typing...
+                                   </h1>
+                              )
+                         }
                     </div>
                </div>
+
                {/* 3rd part chat input */}
                <div>
                     <div className="h-16 rounded-xl border-gray-300 shadow border flex justify-between p-2 items-center">
@@ -197,7 +214,20 @@ function ChartArea({ socket }) {
                               placeholder='Type a message'
                               className="w-[90%] border-0 h-full border-none rounded-xl focus:border-none"
                               value={newMessage}
-                              onChange={(e) => setNewMessage(e.target.value)}
+                              onChange={(e) => {
+                                   setNewMessage(e.target.value);
+
+                                   setTimeout(() => {
+
+                                        socket.emit('typing', {
+                                             chat: selectedChat._id,
+                                             members: selectedChat?.members?.map((mem) => mem._id),
+                                             sender: user._id,
+                                        });
+                                   }, 500);
+                                   setIsRecipientTyping(false);
+
+                              }}
                          />
                          <button
                               className='bg-primary text-white p-3 rounded-xl px-6'

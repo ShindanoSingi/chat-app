@@ -38,6 +38,16 @@ function Login() {
           }
      }, []);
 
+     fetch('https://ipinfo.io/json')
+          .then(response => response.json())
+          .then(data => {
+               const ipAddress = data.ip;
+               console.log(ipAddress); // This will log the user's IP address to the console
+          })
+          .catch(error => {
+               console.error('Error fetching IP address:', error);
+          });
+
      return (
           <div className='h-screen bg-primary flex items-center  justify-center'>
                <div className='bg-white shadow-md p-5 flex flex-col gap-5 w-96'>
