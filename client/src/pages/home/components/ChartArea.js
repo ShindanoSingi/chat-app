@@ -142,6 +142,9 @@ function ChartArea({ socket }) {
                if (data.chat === selectedChat._id && data.sender !== user._id) {
                     setIsRecipientTyping(true);
                }
+               setTimeout(() => {
+                    setIsRecipientTyping(false);
+               }, 1500);
           });
 
      }, [selectedChat]);
@@ -149,7 +152,7 @@ function ChartArea({ socket }) {
      // Scroll to bottom of the messages.
      useEffect(() => {
           const messagesContainer = document.getElementById('messages');
-          messagesContainer.scrollTop = messagesContainer.scrollHeight;
+          messagesContainer.scrollTop = messagesContainer.scrollHeight - 100;
      }, [messages]);
 
      return (
@@ -179,10 +182,10 @@ function ChartArea({ socket }) {
                >
                     <div className='flex flex-col gap-2'>
                          {
-                              messages.map((message) => {
+                              messages.map((message, index) => {
                                    const isCurrentUserIsSender = message.sender === user._id;
                                    return (
-                                        <div key={message._id} className={`flex ${isCurrentUserIsSender && 'justify-end'}`} >
+                                        <div key={index} className={`flex ${isCurrentUserIsSender && 'justify-end'}`} >
                                              <div className='flex flex-col'>
                                                   <h1 className={`${isCurrentUserIsSender ? 'bg-primary text-white rounded-bl-none max-w-xs' : 'bg-gray-300 text-primary max-w-xs rounded-tl-none'} p-2 rounded-xl `} >
                                                        {message.text}
@@ -198,7 +201,7 @@ function ChartArea({ socket }) {
                               })}
                          {
                               isRecipientTyping && (
-                                   <h1 className='bg-gray-300 text-primary rounded-tr-none p-2 rounded-xl'>
+                                   <h1 className='bg-gray-300 text-primary p-2 w-24 rounded-xl'>
                                         Typing...
                                    </h1>
                               )
@@ -216,17 +219,12 @@ function ChartArea({ socket }) {
                               value={newMessage}
                               onChange={(e) => {
                                    setNewMessage(e.target.value);
-
-                                   setTimeout(() => {
-
-                                        socket.emit('typing', {
-                                             chat: selectedChat._id,
-                                             members: selectedChat?.members?.map((mem) => mem._id),
-                                             sender: user._id,
-                                        });
-                                   }, 500);
+                                   socket.emit('typing', {
+                                        chat: selectedChat._id,
+                                        members: selectedChat?.members?.map((mem) => mem._id),
+                                        sender: user._id,
+                                   });
                                    setIsRecipientTyping(false);
-
                               }}
                          />
                          <button

@@ -8,7 +8,7 @@ import moment from 'moment';
 import { CreateNewChat } from '../../../apicalls/chats';
 import store from '../../../redux/store';
 import { io } from 'socket.io-client';
-const socket = io('http://localhost:6000');
+const socket = io('http://localhost:8080');
 
 
 function UsersList({ searchKey }) {
@@ -69,7 +69,7 @@ function UsersList({ searchKey }) {
         } else {
             const lastMsgPerson = chats.lastMessage?.sender === user._id ? 'You:' : "";
             return (
-                <div className='flex justify-between gap-8'>
+                <div key={userObj._id} className='flex justify-between gap-8'>
                     <h1 className='text-gray-600 truncate line-clamp-1 text-sm w-48'>
                         {lastMsgPerson} {chats.lastMessage?.text}
                     </h1>
