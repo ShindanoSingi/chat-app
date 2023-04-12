@@ -96,7 +96,7 @@ function ChartArea({ socket }) {
           }
 
           // receive message from server using socket.
-          socket.off('receive message').on('receive-message', (message) => {
+          socket.off('receive-message').on('receive-message', (message) => {
                const tempSelectedChat = store.getState().userReducer.selectedChat;
                if (tempSelectedChat._id === message.chat) {
                     setMessages((messages) => [...messages, message]);
@@ -152,7 +152,7 @@ function ChartArea({ socket }) {
      // Scroll to bottom of the messages.
      useEffect(() => {
           const messagesContainer = document.getElementById('messages');
-          messagesContainer.scrollTop = messagesContainer.scrollHeight - 100;
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
      }, [messages]);
 
      return (
