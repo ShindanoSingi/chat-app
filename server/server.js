@@ -2,7 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const app = express();
 const dbConfig = require('./config/dbconfig');
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 6000;
 
 // Connect to the database
 const usersRoute = require('./routes/usersRoutes');
@@ -15,7 +15,7 @@ const server = require('http').createServer(app);
 
 const io = require('socket.io')(server, {
     cors: {
-        origin: 'http://localhost:3009',
+        origin: 'http://localhost:3000',
         methods: ['GET', 'POST'],
     },
 });

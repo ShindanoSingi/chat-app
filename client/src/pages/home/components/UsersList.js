@@ -8,7 +8,7 @@ import moment from 'moment';
 import { CreateNewChat } from '../../../apicalls/chats';
 import store from '../../../redux/store';
 import { io } from 'socket.io-client';
-const socket = io('http://localhost:5000');
+const socket = io('http://localhost:6000');
 
 
 function UsersList({ searchKey }) {
