@@ -9,11 +9,18 @@ const socket = io('http://localhost:8080');
 function Home() {
     const [searchKey, setSearchKey] = useState('');
     const { selectedChat, user } = useSelector((state) => state.userReducer);
+    const [onlineUsers, setOnlineUsers] = useState([]);
 
     useEffect(() => {
         // join the room
         if (user) {
             socket.emit('join-room', user._id);
+            socket.emit('came-online', user._id);
+
+            socket.on('online-users', (users) => {
+                setOnlineUsers(users);
+            });
+
         }
     }, [user]);
 
@@ -25,7 +32,7 @@ function Home() {
                     searchKey={searchKey}
                     setSearchKey={setSearchKey}
                 />
-                <UsersList searchKey={searchKey} />
+                <UsersList searchKey={searchKey} onlineUsers={onlineUsers} />
             </div>
             {/* 2nd part: chatbox  */}
 

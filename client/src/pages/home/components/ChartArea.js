@@ -71,7 +71,6 @@ function ChartArea({ socket }) {
                     members: selectedChat?.members?.map((mem) => mem._id),
                })
 
-               dispatch(showLoader());
                const response = await clearChatMessages(selectedChat._id);
                dispatch(hideLoader());
                if (response.success) {
@@ -153,7 +152,7 @@ function ChartArea({ socket }) {
      useEffect(() => {
           const messagesContainer = document.getElementById('messages');
           messagesContainer.scrollTop = messagesContainer.scrollHeight;
-     }, [messages]);
+     }, [messages, isRecipientTyping]);
 
      return (
           <div className='bg-white h-[80vh] border rounded-2xl w-full flex flex-col justify-between p-5'>
@@ -201,7 +200,7 @@ function ChartArea({ socket }) {
                               })}
                          {
                               isRecipientTyping && (
-                                   <h1 className='bg-gray-300 text-primary p-2 w-24 rounded-xl'>
+                                   <h1 className='bg-blue-100 mb-2 text-primary p-2 w-24 rounded-xl'>
                                         Typing...
                                    </h1>
                               )
@@ -211,7 +210,7 @@ function ChartArea({ socket }) {
 
                {/* 3rd part chat input */}
                <div>
-                    <div className="h-16 rounded-xl border-gray-300 shadow border flex justify-between p-2 items-center">
+                    <div className="h-16 mt-2 rounded-xl border-gray-300 shadow border flex justify-between p-2 items-center">
                          <input
                               type="text"
                               placeholder='Type a message'

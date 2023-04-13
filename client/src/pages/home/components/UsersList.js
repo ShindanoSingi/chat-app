@@ -11,7 +11,7 @@ import { io } from 'socket.io-client';
 const socket = io('http://localhost:8080');
 
 
-function UsersList({ searchKey }) {
+function UsersList({ searchKey, onlineUsers }) {
     const { allUsers, allChats, user, selectedChat } = useSelector((state) => state.userReducer);
     const dispatch = useDispatch();
 
@@ -118,7 +118,7 @@ function UsersList({ searchKey }) {
     }, []);
 
     return (
-        <div className='flex flex-col gap-2 mt-5 w-96'>
+        <div className='flex flex-col gap-2 mt-5 lg:w-96 md:w-60 sm:w-60 xl:w-96'>
             {getData().map((chatObjOrUserObj) => {
                 let userObj = chatObjOrUserObj;
 
@@ -146,9 +146,21 @@ function UsersList({ searchKey }) {
                             {
                                 !userObj.profilePic &&
                                 (
-                                    <div className='bg-gray-500 text-white rounded-full h-10 w-10 flex p-5 items-center justify-center'>
-                                        <h1 className='uppercase text-xl font-semibold'>{userObj.name[0]}
+                                    <div className='bg-gray-500 text-white rounded-full h-11 w-11 flex p-5 items-center justify-center relative'>
+                                        <h1 className='uppercase text-xl font-semibold'>
+                                            {userObj.name[0]}
                                         </h1>
+                                        {
+                                            onlineUsers.includes(userObj._id) ?
+                                                <div>
+                                                    <div className='bg-green-600 h-3 w-3 rounded-full absolute bottom-[2px] right-1'>
+                                                    </div>
+                                                </div> :
+                                                <div>
+                                                    <div className='bg-orange-300 h-3 w-3 rounded-full absolute bottom-[2px] right-1'>
+                                                    </div>
+                                                </div>
+                                        }
                                     </div>
                                 )
                             }
