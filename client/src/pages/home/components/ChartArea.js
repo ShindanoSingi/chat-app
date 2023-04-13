@@ -11,6 +11,7 @@ import { IoCheckmarkDoneSharp } from 'react-icons/io5';
 import store from '../../../redux/store';
 import EmojiPicker from 'emoji-picker-react';
 import { BsFillEmojiSmileFill } from 'react-icons/bs';
+import { set } from 'mongoose';
 
 
 function ChartArea({ socket }) {
@@ -40,11 +41,11 @@ function ChartArea({ socket }) {
                });
 
                // Send message to the server using socket.
-
                const response = await SendMessage(message);
 
                if (response.success) {
                     setNewMessage('');
+                    setShowEmojiPicker(false);
                }
           } catch (error) {
 
@@ -251,7 +252,7 @@ function ChartArea({ socket }) {
                                         height={350}
                                         onEmojiClick={(e) => {
                                              setNewMessage(newMessage + e.emoji);
-                                             setShowEmojiPicker(false);
+                                             // setShowEmojiPicker(false);
                                         }}
                                    />
                               </div>)

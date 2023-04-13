@@ -56,7 +56,9 @@ function ProtectedRoute({ children }) {
                     </div>
                     <div className='flex gap-1 items-center text-xl'>
                          <FaUserCircle className='text-xl' />
-                         <h2 className='underline'>{user?.name}</h2>
+                         <h2 className='underline'
+                              onClick={() => { navigate('/profile') }}
+                         >{user?.name}</h2>
                          <AiOutlineLogout
                               className='text-xl ml-5 curse-pointer'
                               onClick={() => {

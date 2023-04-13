@@ -46,3 +46,7 @@ input:focus{
 .all-users:last-child{
      border-bottom-left-radius: 15px;
 }
+
+.file-input{
+     border: none  !important;
+}
