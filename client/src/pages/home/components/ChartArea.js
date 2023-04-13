@@ -9,9 +9,12 @@ import { clearChatMessages } from '../../../apicalls/chats';
 import { SetAllChats } from '../../../redux/userSlice';
 import { IoCheckmarkDoneSharp } from 'react-icons/io5';
 import store from '../../../redux/store';
+import EmojiPicker from 'emoji-picker-react';
+import { BsFillEmojiSmileFill } from 'react-icons/bs';
 
 
 function ChartArea({ socket }) {
+     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
      const [isRecipientTyping, setIsRecipientTyping] = useState(false);
      const [newMessage, setNewMessage] = useState('');
      const [messages, setMessages] = useState([]);
@@ -148,7 +151,6 @@ function ChartArea({ socket }) {
 
      }, [selectedChat]);
 
-
      // Format date.
      const getDateInRegulatarFormat = (date) => {
           let result = '';
@@ -208,17 +210,13 @@ function ChartArea({ socket }) {
                                    const isCurrentUserIsSender = message.sender === user._id;
                                    return (
                                         <div key={index} className={`flex ${isCurrentUserIsSender && 'justify-end'}`} >
-                                             <div className='flex flex-col'>
-                                                  <h1 className={`${isCurrentUserIsSender ? 'bg-primary text-white rounded-bl-none max-w-xs' : 'bg-gray-300 text-primary max-w-xs rounded-tl-none'} p-2 rounded-xl `} >
+                                             <div className='flex flex-col items-end'>
+                                                  <h1 className={`${isCurrentUserIsSender ? 'bg-primary text-white rounded-bl-none w-fit max-w-xs' : 'bg-gray-300 w-fit text-primary max-w-xs rounded-tl-none'} p-2 rounded-xl `} >
                                                        {message.text}
                                                   </h1>
-                                                  <h1 className='text-xs text-gray-500 w-36'>
+                                                  <h1 className='text-xs text-gray-500 w-36 relative left-7'>
                                                        <h1 className='text-center'>
                                                             {
-                                                                 // messages[index - 1] &&
-                                                                 // moment(messages[index - 1].createdAt)
-                                                                 //      .format('DD MMM YYYY') !== moment(messages[index].createdAt)
-                                                                 //           .format('DD MMM YYYY') &&
                                                                  getDateInRegulatarFormat(message.createdAt)
                                                             } {
 
@@ -229,7 +227,7 @@ function ChartArea({ socket }) {
                                                   </h1>
 
                                              </div>
-                                             {isCurrentUserIsSender && <IoCheckmarkDoneSharp className={`text-3xl p-1 ${message.read ? 'text-green-700' : 'text-gray-400'}`} />}
+                                             {isCurrentUserIsSender && <IoCheckmarkDoneSharp className={`text-2xl ${message.read ? 'text-green-700' : 'text-gray-400'}`} />}
                                         </div>
                                    )
                               })}
@@ -246,6 +244,21 @@ function ChartArea({ socket }) {
                {/* 3rd part chat input */}
                <div>
                     <div className="h-16 mt-2 rounded-xl border-gray-300 shadow border flex justify-between p-2 items-center">
+                         {
+                              showEmojiPicker &&
+                              (<div className='absolute bottom-[175px]'>
+                                   <EmojiPicker
+                                        height={350}
+                                        onEmojiClick={(e) => {
+                                             setNewMessage(newMessage + e.emoji);
+                                             setShowEmojiPicker(false);
+                                        }}
+                                   />
+                              </div>)
+                         }
+                         <BsFillEmojiSmileFill className='text-2xl ml-2 cursor-pointer'
+                              onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                         />
                          <input
                               type="text"
                               placeholder='Type a message'
@@ -267,6 +280,7 @@ function ChartArea({ socket }) {
                          >
                               <RiSendPlaneFill className='text-2xl' />
                          </button>
+
                     </div>
                </div>
           </div>
