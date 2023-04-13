@@ -148,6 +148,29 @@ function ChartArea({ socket }) {
 
      }, [selectedChat]);
 
+
+     // Format date.
+     const getDateInRegulatarFormat = (date) => {
+          let result = '';
+          // Date is today, return todat.
+          if (moment(date).isSame(moment(), 'day')) {
+               result = 'Today';
+          }
+          // Date is yesterday, return yesterday.
+          else if (moment(date).isSame(moment().subtract(1, 'day'), 'day')) {
+               result = 'Yest.';
+          }
+          // if date is this year, return date in MMM DD format.
+          else if (moment(date).isSame(moment(), 'year')) {
+               result = moment(date).format('MMM DD');
+          }
+          // else return date in MMM DD, YYYY format.
+          else {
+               result = moment(date).format('MMM DD, YYYY');
+          }
+          return result;
+     };
+
      // Scroll to bottom of the messages.
      useEffect(() => {
           const messagesContainer = document.getElementById('messages');
@@ -189,8 +212,20 @@ function ChartArea({ socket }) {
                                                   <h1 className={`${isCurrentUserIsSender ? 'bg-primary text-white rounded-bl-none max-w-xs' : 'bg-gray-300 text-primary max-w-xs rounded-tl-none'} p-2 rounded-xl `} >
                                                        {message.text}
                                                   </h1>
-                                                  <h1 className='text-xs text-gray-500'>
-                                                       {moment(message.createdAt).format('hh:mm A')}
+                                                  <h1 className='text-xs text-gray-500 w-36'>
+                                                       <h1 className='text-center'>
+                                                            {
+                                                                 // messages[index - 1] &&
+                                                                 // moment(messages[index - 1].createdAt)
+                                                                 //      .format('DD MMM YYYY') !== moment(messages[index].createdAt)
+                                                                 //           .format('DD MMM YYYY') &&
+                                                                 getDateInRegulatarFormat(message.createdAt)
+                                                            } {
+
+                                                            }
+                                                            {moment(message.createdAt).format('hh:mm A')}
+                                                       </h1>
+
                                                   </h1>
 
                                              </div>

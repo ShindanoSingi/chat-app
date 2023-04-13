@@ -60,6 +60,28 @@ function UsersList({ searchKey, onlineUsers }) {
         return false;
     };
 
+    // Format date.
+    const getDateInRegulatarFormat = (date) => {
+        let result = '';
+        // Date is today, return todat.
+        if (moment(date).isSame(moment(), 'day')) {
+            result = 'Today';
+        }
+        // Date is yesterday, return yesterday.
+        else if (moment(date).isSame(moment().subtract(1, 'day'), 'day')) {
+            result = 'Yest.';
+        }
+        // if date is this year, return date in MMM DD format.
+        else if (moment(date).isSame(moment(), 'year')) {
+            result = moment(date).format('MMM DD');
+        }
+        // else return date in MMM DD, YYYY format.
+        else {
+            result = moment(date).format('MMM DD, YYYY');
+        }
+        return result;
+    };
+
     const getLastMsg = (userObj) => {
         const chats = allChats.find((chat) =>
             chat.members.map((mem) => mem._id).includes(userObj._id)
@@ -73,8 +95,9 @@ function UsersList({ searchKey, onlineUsers }) {
                     <h1 className='text-gray-600 truncate line-clamp-1 text-sm w-48'>
                         {lastMsgPerson} {chats.lastMessage?.text}
                     </h1>
-                    <h1 className='text-gray-500 text-sm w-15'>
-                        {moment(chats.lastMessage?.createdAt).format('hh:mm A')}
+                    <h1 className='flex w-16 gap-1 flex-col items-center'>
+                        <p className='text-gray-500 text-xs'>{getDateInRegulatarFormat(chats?.lastMessage?.createdAt)}</p>
+                        <p className='text-gray-500 text-xs'>{moment(chats.lastMessage?.createdAt).format('hh:mm A')}</p>
                     </h1>
                 </div>
             )
@@ -96,11 +119,14 @@ function UsersList({ searchKey, onlineUsers }) {
         }
     };
 
+
+
+
     useEffect(() => {
         socket.on('receive-message', (message) => {
             // if the chat area opened is not equal to chat n message, then increase unread messages by 1 and update the last message
             const tempSelectedChat = store.getState().userReducer.selectedChat;
-            const tempAllChats = store.getState().userReducer.allChats;
+            let tempAllChats = store.getState().userReducer.allChats;
             if (tempSelectedChat?._id !== message.chat) {
                 const updatedAllChats = tempAllChats.map((chat) => {
                     if (chat._id === message.chat) {
@@ -112,8 +138,14 @@ function UsersList({ searchKey, onlineUsers }) {
                     }
                     return chat;
                 });
-                dispatch(SetAllChats(updatedAllChats));
+                tempAllChats = updatedAllChats;
             }
+
+            //  Always update the last message  chat will on the top.
+            const latestChat = tempAllChats.find((chat) => chat._id === message.chat);
+            const otherChats = tempAllChats.filter((chat) => chat._id !== message.chat);
+            tempAllChats = [latestChat, ...otherChats];
+            dispatch(SetAllChats(tempAllChats));
         });
     }, []);
 
