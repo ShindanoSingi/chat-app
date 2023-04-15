@@ -168,11 +168,26 @@ function UsersList({ searchKey, onlineUsers }) {
                             {
                                 userObj.profilePic &&
                                 (
-                                    <img
-                                        src={userObj.profilePic}
-                                        alt='profile pic'
-                                        className='rounded-full h-10 w-10'
-                                    />
+
+                                    <div className='rounded-full h-11 w-14 items-center justify-center relative'>
+                                        <img
+                                            src={userObj.profilePic}
+                                            alt='profile pic'
+                                            className='rounded-full h-11 w-11 object-cover'
+                                        />
+                                        {
+                                            onlineUsers.includes(userObj._id) ?
+                                                <div>
+                                                    <div className='bg-green-600 h-3 w-3 rounded-full absolute bottom-[2px] right-1'>
+                                                    </div>
+                                                </div> :
+                                                <div>
+                                                    <div className='bg-orange-300 h-3 w-3 rounded-full absolute bottom-[2px] right-1'>
+                                                    </div>
+                                                </div>
+                                        }
+                                    </div>
+
                                 )
                             }
                             {

@@ -111,7 +111,7 @@ router.post('/update-profile-picture', authMiddleware, async (req, res) => {
 
           // Upload image to cloudinary and get the url
           const uploadedImage = await cloudinary.uploader.upload(image, {
-               upload_preset: 'bembe-chat',
+               folder: 'assets',
           });
 
           // Update user profile picture

@@ -211,11 +211,11 @@ function ChartArea({ socket }) {
                                    const isCurrentUserIsSender = message.sender === user._id;
                                    return (
                                         <div key={index} className={`flex ${isCurrentUserIsSender && 'justify-end'}`} >
-                                             <div className='flex flex-col items-end'>
+                                             <div className={` ${isCurrentUserIsSender ? 'flex flex-col items-end rounded-bl-none pb-2 px-2 rounded-xl bg-primary' : 'flex flex-col items-start rounded-tl-none p-2 rounded-xl bg-gray-300 w-fit'}`}>
                                                   <h1 className={`${isCurrentUserIsSender ? 'bg-primary text-white rounded-bl-none w-fit max-w-xs' : 'bg-gray-300 w-fit text-primary max-w-xs rounded-tl-none'} p-2 rounded-xl `} >
                                                        {message.text}
                                                   </h1>
-                                                  <h1 className='text-xs text-gray-500 w-36 relative left-7'>
+                                                  <h1 className='text-xs text-gray-500  relative'>
                                                        <h1 className='text-center'>
                                                             {
                                                                  getDateInRegulatarFormat(message.createdAt)
@@ -252,7 +252,6 @@ function ChartArea({ socket }) {
                                         height={350}
                                         onEmojiClick={(e) => {
                                              setNewMessage(newMessage + e.emoji);
-                                             // setShowEmojiPicker(false);
                                         }}
                                    />
                               </div>)

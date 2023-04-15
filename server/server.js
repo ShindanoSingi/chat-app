@@ -8,6 +8,7 @@ const PORT = 8080;
 const usersRoute = require('./routes/usersRoutes');
 const chatsRoute = require('./routes/chatsRoutes');
 const messagesRoute = require('./routes/messagesRoutes');
+app.use(express.json({ limit: '50mb' }));
 
 app.use(express.json());
 
