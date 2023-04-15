@@ -39,7 +39,11 @@ function Register() {
      return (
           <div className='h-screen bg-primary flex items-center  justify-center'>
                <div className='bg-white shadow-md p-5 flex flex-col gap-5 w-96'>
-                    <h1 className="text-2xl uppercase text-center font-semibold text-primary">Bembe-Chat Register</h1>
+                    <div className='flex justify-center gap-2 items-center'>
+                         <i className="ri-wechat-fill text-3xl text-primary"></i>
+                         <h1 className="text-2xl uppercase text-center font-semibold text-primary">Bembe-Chat Register</h1>
+                    </div>
+
                     <hr />
                     <input type="text"
                          value={user.name}
