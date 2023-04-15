@@ -54,17 +54,17 @@ function ProtectedRoute({ children }) {
                          <i className="ri-wechat-fill text-3xl"></i>
                          <h1 className=' text-2xl text-white uppercase font-semibold'>Bembe-Chat</h1>
                     </div>
-                    <div className='flex gap-1 items-center text-xl'>
+                    <div className='flex gap-2 items-center text-xl bg-white p-1 px-2 rounded-xl'>
                          {
                               user?.profilePic ? (
                                    <img src={user?.profilePic} alt="profile pic" className='w-10 h-10 rounded-full' />
                               ) : <FaUserCircle className='text-xl' />
                          }
-                         <h2 className='underline'
+                         <h2 className='underline text-primary'
                               onClick={() => { navigate('/profile') }}
                          >{user?.name}</h2>
                          <AiOutlineLogout
-                              className='text-xl ml-5 curse-pointer'
+                              className='text-xl ml-3 text-primary curse-pointer'
                               onClick={() => {
                                    localStorage.removeItem("token");
                                    navigate('/login');

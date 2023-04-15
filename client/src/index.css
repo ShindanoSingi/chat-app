@@ -34,6 +34,15 @@ input:focus{
      text-transform: uppercase;
 }
 
+.disabled-btn{
+     background-color: #cac8cd;
+     color: rgb(92,90,90);
+     padding: 5px 20px;
+     height: 40px;
+     text-transform: uppercase;
+     opacity: 0.5;
+}
+
 .all-users:first-child{
      border-top-right-radius: 15px;
 }

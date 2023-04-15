@@ -61,13 +61,15 @@ function Login() {
                          value={user.email}
                          onChange={(e) => setUser({ ...user, email: e.target.value })}
                          placeholder="Enter your email"
+                         className={user.email ? 'border-green-500' : 'border-red-500'}
                     />
                     <input type="password"
                          value={user.password}
                          onChange={(e) => setUser({ ...user, password: e.target.value })}
                          placeholder="Enter your password"
+                         className={user.email ? 'border-green-500' : 'border-red-500'}
                     />
-                    <button className='contained-btn' onClick={loginUser}>Login</button>
+                    <button className={user.email && user.password ? 'contained-btn' : 'disabled-btn'} onClick={loginUser}>Login</button>
                     <Link to='/register'
                          className='underline text-center'
                     >
