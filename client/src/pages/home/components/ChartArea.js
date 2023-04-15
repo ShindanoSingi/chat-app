@@ -11,6 +11,9 @@ import { IoCheckmarkDoneSharp } from 'react-icons/io5';
 import store from '../../../redux/store';
 import EmojiPicker from 'emoji-picker-react';
 import { BsFillEmojiSmileFill } from 'react-icons/bs';
+import { BiLinkAlt } from 'react-icons/bi';
+import { AiFillAudio } from 'react-icons/ai';
+
 
 
 function ChartArea({ socket }) {
@@ -23,12 +26,14 @@ function ChartArea({ socket }) {
      const receipientUser = selectedChat.members.find((mem) => mem._id !== user._id);
 
 
-     const sendNewMessage = async () => {
+     const sendNewMessage = async (image, audio) => {
           try {
                const message = {
                     chat: selectedChat._id,
                     sender: user._id,
                     text: newMessage,
+                    image,
+                    audio
                };
 
                // Send message to the server using socket.
@@ -47,7 +52,7 @@ function ChartArea({ socket }) {
                     setShowEmojiPicker(false);
                }
           } catch (error) {
-
+               console.log(error);
                toast.error(error.message);
           };
      };
@@ -173,6 +178,26 @@ function ChartArea({ socket }) {
           return result;
      };
 
+     // Upload image.
+     const onImageUploadClick = async (e) => {
+          const file = e.target.files[0];
+          const reader = new FileReader(file);
+          reader.readAsDataURL(file);
+          reader.onloadend = async () => {
+               sendNewMessage(reader.result);
+          };
+     };
+
+     const onAudioClick = async (e) => {
+          const file = e.target.files[0];
+          const reader = new FileReader(file);
+          reader.readAsDataURL(file);
+          reader.onloadend = async () => {
+               sendNewMessage(reader.result);
+          };
+     };
+
+
      // Scroll to bottom of the messages.
      useEffect(() => {
           const messagesContainer = document.getElementById('messages');
@@ -201,19 +226,16 @@ function ChartArea({ socket }) {
                </div>
 
                {/* 2nd part chat messages */}
-               <div className='h-[62vh] overflow-scroll px-5 scrollbar-hide'
-                    id='messages'
-               >
+               <div className='h-[62vh] overflow-scroll px-5 scrollbar-hide' id='messages'>
                     <div className='flex flex-col gap-2'>
                          {
                               messages.map((message, index) => {
                                    const isCurrentUserIsSender = message.sender === user._id;
                                    return (
                                         <div key={index} className={`flex ${isCurrentUserIsSender && 'justify-end'}`} >
-                                             <div className={` ${isCurrentUserIsSender ? 'flex flex-col items-end rounded-bl-none pb-2 px-2 rounded-xl bg-primary' : 'flex flex-col items-start rounded-tl-none pb-2 px-2 rounded-xl bg-gray-300 w-fit'}`}>
-                                                  <h1 className={`${isCurrentUserIsSender ? 'bg-primary text-white rounded-bl-none w-fit max-w-xs' : 'bg-gray-300 w-fit text-primary max-w-xs rounded-tl-none'} p-2 rounded-xl `} >
-                                                       {message.text}
-                                                  </h1>
+                                             <div className={` ${isCurrentUserIsSender ? 'flex flex-col items-end rounded-bl-none pb-2 px-2 rounded-xl bg-primary p-2' : 'flex flex-col items-start rounded-tl-none pb-2 px-2 rounded-xl bg-gray-300 w-fit p-2'}`}>
+                                                  {message.text && <h1 className={`text-sm  ${isCurrentUserIsSender ? 'text-white' : 'text-gray-700'}`}>{message.text}</h1>}
+                                                  {message.image && <img src={message.image} alt='message_image' className='w-32 h-32 rounded-xl' />}
                                                   <h1 className='text-xs text-gray-500  relative'>
                                                        {
                                                             getDateInRegulatarFormat(message.createdAt) === 'Today' ?
@@ -224,13 +246,11 @@ function ChartArea({ socket }) {
                                                                  </h1>
                                                                  :
                                                                  <h1 className='text-center'>
-
                                                                       {
                                                                            getDateInRegulatarFormat(message.createdAt)
                                                                       }
                                                                  </h1>
                                                        }
-
                                                   </h1>
 
                                              </div>
@@ -262,13 +282,29 @@ function ChartArea({ socket }) {
                                    />
                               </div>)
                          }
-                         <BsFillEmojiSmileFill className='text-4xl ml-2 text-yellow-500 cursor-pointer'
+                         <BsFillEmojiSmileFill className='text-4xl m-2 text-primary cursor-pointer'
                               onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                          />
+
+                         <label for='file'>
+                              <BiLinkAlt typeof='file' className='text-4xl ml-2 text-primary cursor-pointer'
+                              />
+                              <input
+                                   type="file"
+                                   id='file'
+                                   className='hidden'
+                                   accept='image/gif, image/jpeg, image/png, image/jpg'
+                                   onChange={onImageUploadClick}
+                              />
+                         </label>
+                         {/* <AiFillAudio
+                              className='text-4xl ml-2 text-primary hidden cursor-pointer'
+                              onClick={() => { onAudioClick() }}
+                         /> */}
                          <input
                               type="text"
                               placeholder='Type a message'
-                              className="w-[90%] border-0 h-full border-none rounded-xl focus:border-none"
+                              className="w-[90%] mr-2 border-0 h-full border-none rounded-xl focus:border-none"
                               value={newMessage}
                               onChange={(e) => {
                                    setNewMessage(e.target.value);
@@ -282,7 +318,7 @@ function ChartArea({ socket }) {
                          />
                          <button
                               className='bg-primary text-white p-3 rounded-xl px-6'
-                              onClick={sendNewMessage}
+                              onClick={() => { sendNewMessage('') }}
                          >
                               <RiSendPlaneFill className='text-2xl' />
                          </button>

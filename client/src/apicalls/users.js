@@ -46,3 +46,14 @@ export const UpdateProfilePic = async (image) => {
           return error.response.data;
      }
 }
+
+// export const UploadAudio = async (audio) => {
+//      try {
+//           const response = await axiosInstance.post('/api/users/upload-audio', {
+//                audio,
+//           });
+//           return response.data;
+//      } catch (error) {
+//           return error.response.data;
+//      }
+// };

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import { toast } from 'react-hot-toast';
-import { UpdateProfilePic } from '../../apicalls/users';
+import { UpdateProfilePic, UploadAudio } from '../../apicalls/users';
 import { useDispatch } from 'react-redux';
 import { hideLoader, showLoader } from '../../redux/loaderSlice';
 
@@ -10,6 +10,7 @@ import { hideLoader, showLoader } from '../../redux/loaderSlice';
 export const Profile = () => {
     const { user } = useSelector(state => state.userReducer);
     const [image, setImage] = useState('');
+    const [audio, setAudio] = useState('');
     const dispatch = useDispatch();
 
     const onFileSelect = (e) => {
@@ -35,6 +36,26 @@ export const Profile = () => {
             toast.error(error.message);
         }
     };
+
+    // const onAudioSelect = (e) => {
+    //     const file = e.target.files[0];
+    //     const reader = new FileReader(file);
+    //     reader.readAsDataURL(file);
+    //     reader.onloadend = async () => {
+    //         setImage(reader.result);
+    //     }
+    // };
+
+    // const uploadAudio = async () => {
+    //     try {
+    //         const response = await UploadAudio({ audio });
+    //         if (response.success) {
+    //             toast.success('Audio Uploaded Successfully');
+    //         }
+    //     } catch (error) {
+    //         toast.error(error.message);
+    //     }
+    // };
 
     useEffect(() => {
         if (user?.profilePic) {

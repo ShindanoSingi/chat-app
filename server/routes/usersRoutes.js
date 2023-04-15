@@ -135,5 +135,28 @@ router.post('/update-profile-picture', authMiddleware, async (req, res) => {
      }
 });
 
+// Upload audio file
+// router.post('/upload-audio', authMiddleware, async (req, res) => {
+//      try {
+//           const audio = req.body.audio;
+
+//           // Upload audio to cloudinary and get the url
+//           const uploadedAudio = await cloudinary.uploader.upload(audio, {
+//                folder: 'assets',
+//           });
+
+//           res.send({
+//                success: true,
+//                message: 'Audio file uploaded successfully!',
+//                data: uploadedAudio.secure_url,
+//           });
+//      } catch (error) {
+//           res.send({
+//                message: error.message,
+//                success: false,
+//           });
+//      }
+// });
+
 
 module.exports = router;
