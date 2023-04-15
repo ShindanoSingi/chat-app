@@ -11,7 +11,6 @@ import { IoCheckmarkDoneSharp } from 'react-icons/io5';
 import store from '../../../redux/store';
 import EmojiPicker from 'emoji-picker-react';
 import { BsFillEmojiSmileFill } from 'react-icons/bs';
-import { set } from 'mongoose';
 
 
 function ChartArea({ socket }) {
@@ -211,19 +210,26 @@ function ChartArea({ socket }) {
                                    const isCurrentUserIsSender = message.sender === user._id;
                                    return (
                                         <div key={index} className={`flex ${isCurrentUserIsSender && 'justify-end'}`} >
-                                             <div className={` ${isCurrentUserIsSender ? 'flex flex-col items-end rounded-bl-none pb-2 px-2 rounded-xl bg-primary' : 'flex flex-col items-start rounded-tl-none p-2 rounded-xl bg-gray-300 w-fit'}`}>
+                                             <div className={` ${isCurrentUserIsSender ? 'flex flex-col items-end rounded-bl-none pb-2 px-2 rounded-xl bg-primary' : 'flex flex-col items-start rounded-tl-none pb-2 px-2 rounded-xl bg-gray-300 w-fit'}`}>
                                                   <h1 className={`${isCurrentUserIsSender ? 'bg-primary text-white rounded-bl-none w-fit max-w-xs' : 'bg-gray-300 w-fit text-primary max-w-xs rounded-tl-none'} p-2 rounded-xl `} >
                                                        {message.text}
                                                   </h1>
                                                   <h1 className='text-xs text-gray-500  relative'>
-                                                       <h1 className='text-center'>
-                                                            {
-                                                                 getDateInRegulatarFormat(message.createdAt)
-                                                            } {
+                                                       {
+                                                            getDateInRegulatarFormat(message.createdAt) === 'Today' ?
+                                                                 <h1 className='text-center'>
+                                                                      {
+                                                                           moment(message.createdAt).format('hh:mm A')
+                                                                      }
+                                                                 </h1>
+                                                                 :
+                                                                 <h1 className='text-center'>
 
-                                                            }
-                                                            {moment(message.createdAt).format('hh:mm A')}
-                                                       </h1>
+                                                                      {
+                                                                           getDateInRegulatarFormat(message.createdAt)
+                                                                      }
+                                                                 </h1>
+                                                       }
 
                                                   </h1>
 
@@ -251,12 +257,12 @@ function ChartArea({ socket }) {
                                    <EmojiPicker
                                         height={350}
                                         onEmojiClick={(e) => {
-                                             setNewMessage(newMessage + e.emoji);
+                                             setNewMessage(newMessage + '' + e.emoji + ' ');
                                         }}
                                    />
                               </div>)
                          }
-                         <BsFillEmojiSmileFill className='text-2xl ml-2 cursor-pointer'
+                         <BsFillEmojiSmileFill className='text-4xl ml-2 text-yellow-500 cursor-pointer'
                               onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                          />
                          <input

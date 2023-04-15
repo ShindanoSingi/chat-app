@@ -36,9 +36,11 @@ export const GetAllUsers = async () => {
      }
 }
 
-export const UpdateProfilePicture = async (image) => {
+export const UpdateProfilePic = async (image) => {
      try {
-          const response = await axiosInstance.post('/api/users/update-profile-picture', image);
+          const response = await axiosInstance.post('/api/users/update-profile-picture', {
+               image,
+          });
           return response.data;
      } catch (error) {
           return error.response.data;

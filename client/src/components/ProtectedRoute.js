@@ -55,7 +55,11 @@ function ProtectedRoute({ children }) {
                          <h1 className=' text-2xl text-white uppercase font-semibold'>Bembe-Chat</h1>
                     </div>
                     <div className='flex gap-1 items-center text-xl'>
-                         <FaUserCircle className='text-xl' />
+                         {
+                              user?.profilePic ? (
+                                   <img src={user?.profilePic} alt="profile pic" className='w-10 h-10 rounded-full' />
+                              ) : <FaUserCircle className='text-xl' />
+                         }
                          <h2 className='underline'
                               onClick={() => { navigate('/profile') }}
                          >{user?.name}</h2>

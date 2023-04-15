@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import { toast } from 'react-hot-toast';
-import { UpdateProfilePicture } from '../../apicalls/users';
+import { UpdateProfilePic } from '../../apicalls/users';
 import { useDispatch } from 'react-redux';
 import { hideLoader, showLoader } from '../../redux/loaderSlice';
 
@@ -16,7 +16,7 @@ export const Profile = () => {
         const file = e.target.files[0];
         const reader = new FileReader(file);
         reader.readAsDataURL(file);
-        reader.onloadend = async (file) => {
+        reader.onloadend = async () => {
             setImage(reader.result);
         }
     };
@@ -24,7 +24,8 @@ export const Profile = () => {
     const updateProfilePic = async () => {
         try {
             dispatch(showLoader());
-            const response = await UpdateProfilePicture({ image });
+            const response = await UpdateProfilePic({ image });
+
             if (response.success) {
                 toast.success('Profile Pic Updated Successfully');
                 dispatch(hideLoader());
@@ -36,8 +37,8 @@ export const Profile = () => {
     };
 
     useEffect(() => {
-        if (user?.ProfilePic) {
-            setImage(user.ProfilePic);
+        if (user?.profilePic) {
+            setImage(user.profilePic);
         }
     }, [user]);
 
@@ -66,7 +67,9 @@ export const Profile = () => {
                 <button
                     className='contained-btn'
                     onClick={updateProfilePic}
-                >Update</button>
+                >
+                    Update
+                </button>
             </div>
 
         </div>
