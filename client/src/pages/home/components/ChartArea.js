@@ -28,6 +28,10 @@ function ChartArea({ socket }) {
 
      const sendNewMessage = async (image, audio) => {
           try {
+               if (!newMessage && !image && !audio) {
+                    return toast.error('Please enter a message');
+               }
+               console.log(newMessage.length);
                const message = {
                     chat: selectedChat._id,
                     sender: user._id,
@@ -96,6 +100,38 @@ function ChartArea({ socket }) {
           };
      };
 
+     // Format date.
+     const getDateInRegulatarFormat = (date) => {
+          let result = '';
+          // Date is today, return todat.
+          if (moment(date).isSame(moment(), 'day')) {
+               result = 'Today';
+          }
+          // Date is yesterday, return yesterday.
+          else if (moment(date).isSame(moment().subtract(1, 'day'), 'day')) {
+               result = 'Yesterday';
+          }
+          // if date is this year, return date in MMM DD format.
+          else if (moment(date).isSame(moment(), 'year')) {
+               result = moment(date).format('MMM DD');
+          }
+          // else return date in MMM DD, YYYY format.
+          else {
+               result = moment(date).format('MMM DD, YYYY');
+          }
+          return result;
+     };
+
+     // Upload image.
+     const onImageUploadClick = async (e) => {
+          const file = e.target.files[0];
+          const reader = new FileReader(file);
+          reader.readAsDataURL(file);
+          reader.onloadend = async () => {
+               sendNewMessage(reader.result);
+          };
+     };
+
      useEffect(() => {
           getMessages();
           if (selectedChat?.lastMessage?.sender !== user._id) {
@@ -156,46 +192,14 @@ function ChartArea({ socket }) {
 
      }, [selectedChat]);
 
-     // Format date.
-     const getDateInRegulatarFormat = (date) => {
-          let result = '';
-          // Date is today, return todat.
-          if (moment(date).isSame(moment(), 'day')) {
-               result = 'Today';
-          }
-          // Date is yesterday, return yesterday.
-          else if (moment(date).isSame(moment().subtract(1, 'day'), 'day')) {
-               result = 'Yest.';
-          }
-          // if date is this year, return date in MMM DD format.
-          else if (moment(date).isSame(moment(), 'year')) {
-               result = moment(date).format('MMM DD');
-          }
-          // else return date in MMM DD, YYYY format.
-          else {
-               result = moment(date).format('MMM DD, YYYY');
-          }
-          return result;
-     };
-
-     // Upload image.
-     const onImageUploadClick = async (e) => {
-          const file = e.target.files[0];
-          const reader = new FileReader(file);
-          reader.readAsDataURL(file);
-          reader.onloadend = async () => {
-               sendNewMessage(reader.result);
-          };
-     };
-
-     const onAudioClick = async (e) => {
-          const file = e.target.files[0];
-          const reader = new FileReader(file);
-          reader.readAsDataURL(file);
-          reader.onloadend = async () => {
-               sendNewMessage(reader.result);
-          };
-     };
+     // const onAudioClick = async (e) => {
+     //      const file = e.target.files[0];
+     //      const reader = new FileReader(file);
+     //      reader.readAsDataURL(file);
+     //      reader.onloadend = async () => {
+     //           sendNewMessage(reader.result);
+     //      };
+     // };
 
 
      // Scroll to bottom of the messages.
