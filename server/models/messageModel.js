@@ -17,10 +17,6 @@ const messageSchema = new mongoose.Schema({
           type: String,
           required: false,
      },
-     audio: {
-          type: String,
-          required: false,
-     },
      read: {
           type: Boolean,
           default: false,

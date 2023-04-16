@@ -10,7 +10,6 @@ import { hideLoader, showLoader } from '../../redux/loaderSlice';
 export const Profile = () => {
     const { user } = useSelector(state => state.userReducer);
     const [image, setImage] = useState('');
-    const [audio, setAudio] = useState('');
     const dispatch = useDispatch();
 
     const onFileSelect = (e) => {
@@ -18,6 +17,7 @@ export const Profile = () => {
         const reader = new FileReader(file);
         reader.readAsDataURL(file);
         reader.onloadend = async () => {
+            console.log(reader.result);
             setImage(reader.result);
         }
     };
@@ -37,26 +37,6 @@ export const Profile = () => {
         }
     };
 
-    // const onAudioSelect = (e) => {
-    //     const file = e.target.files[0];
-    //     const reader = new FileReader(file);
-    //     reader.readAsDataURL(file);
-    //     reader.onloadend = async () => {
-    //         setImage(reader.result);
-    //     }
-    // };
-
-    // const uploadAudio = async () => {
-    //     try {
-    //         const response = await UploadAudio({ audio });
-    //         if (response.success) {
-    //             toast.success('Audio Uploaded Successfully');
-    //         }
-    //     } catch (error) {
-    //         toast.error(error.message);
-    //     }
-    // };
-
     useEffect(() => {
         if (user?.profilePic) {
             setImage(user.profilePic);
@@ -69,6 +49,7 @@ export const Profile = () => {
             <h1 >{user.email}</h1>
             <h1>Created At: {moment(user.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</h1>
             {
+
                 image &&
                 (<img
                     src={image}

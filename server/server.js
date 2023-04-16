@@ -55,10 +55,9 @@ io.on('connection', (socket) => {
 
         if (!onlineUsers.includes(userId)) {
             onlineUsers.push(userId);
-        };
+        }
         io.emit('online-users', onlineUsers);
-    })
-
+    });
 });
 
 app.use('/api/users', usersRoute);

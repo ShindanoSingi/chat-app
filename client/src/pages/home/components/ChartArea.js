@@ -28,16 +28,14 @@ function ChartArea({ socket }) {
 
      const sendNewMessage = async (image, audio) => {
           try {
-               if (!newMessage && !image && !audio) {
+               if (!newMessage && !image) {
                     return toast.error('Please enter a message');
                }
-               console.log(newMessage.length);
                const message = {
                     chat: selectedChat._id,
                     sender: user._id,
                     text: newMessage,
-                    image,
-                    audio
+                    image
                };
 
                // Send message to the server using socket.
@@ -192,16 +190,6 @@ function ChartArea({ socket }) {
 
      }, [selectedChat]);
 
-     // const onAudioClick = async (e) => {
-     //      const file = e.target.files[0];
-     //      const reader = new FileReader(file);
-     //      reader.readAsDataURL(file);
-     //      reader.onloadend = async () => {
-     //           sendNewMessage(reader.result);
-     //      };
-     // };
-
-
      // Scroll to bottom of the messages.
      useEffect(() => {
           const messagesContainer = document.getElementById('messages');
@@ -301,10 +289,6 @@ function ChartArea({ socket }) {
                                    onChange={onImageUploadClick}
                               />
                          </label>
-                         {/* <AiFillAudio
-                              className='text-4xl ml-2 text-primary hidden cursor-pointer'
-                              onClick={() => { onAudioClick() }}
-                         /> */}
                          <input
                               type="text"
                               placeholder='Type a message'

@@ -38,22 +38,10 @@ export const GetAllUsers = async () => {
 
 export const UpdateProfilePic = async (image) => {
      try {
-          const response = await axiosInstance.post('/api/users/update-profile-picture', {
-               image,
-          });
+          const response = await axiosInstance.post('/api/users/update-profile-picture',
+               image);
           return response.data;
      } catch (error) {
           return error.response.data;
      }
 }
-
-// export const UploadAudio = async (audio) => {
-//      try {
-//           const response = await axiosInstance.post('/api/users/upload-audio', {
-//                audio,
-//           });
-//           return response.data;
-//      } catch (error) {
-//           return error.response.data;
-//      }
-// };
