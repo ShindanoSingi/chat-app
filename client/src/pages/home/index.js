@@ -41,6 +41,17 @@ function Home() {
                     <  ChartArea socket={socket} />
                 </div>
             )}
+            {
+                !selectedChat && (
+                    <div className='w-full h-[80vh] flex items-center justify-center'>
+                        <img
+                            src="https://www.pngmart.com/files/16/Speech-Chat-Icon-Transparent-PNG.png"
+                            alt="Speech-Chat-Icon"
+                            className='w-96 h-96 justify-center items-center'
+                        />
+                    </div>
+                )
+            }
         </div>
     )
 }
