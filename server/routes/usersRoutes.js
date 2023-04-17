@@ -116,20 +116,11 @@ router.post('/update-profile-picture', authMiddleware, async (req, res) => {
 
 
           // Update user profile picture
-          // const user = await User.findOneAndUpdate(
-          //      { _id: req.body._userId },
-          //      { profilePic: uploadedImage.secure_url },
-          //      { new: true }
-          // );
           const user = await User.findOneAndUpdate(
                { _id: req.body.userId },
                { profilePic: uploadedImage.secure_url },
                { new: true }
           );
-
-          console.log(uploadedImage.secure_url);
-          console.log(req.body.userId);
-          console.log(`The user's id is: `);
 
           res.send({
                success: true,

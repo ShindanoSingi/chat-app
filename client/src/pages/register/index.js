@@ -4,6 +4,7 @@ import { RegisterUser } from '../../apicalls/users';
 import { toast } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { hideLoader, showLoader } from '../../redux/loaderSlice';
+import './index.css'
 
 function Register() {
      const dispatch = useDispatch();
@@ -38,10 +39,10 @@ function Register() {
 
      return (
           <div className='h-screen bg-primary flex items-center  justify-center'>
-               <div className='bg-white shadow-md p-5 flex flex-col gap-5 w-96'>
-                    <div className='flex justify-center gap-2 items-center'>
-                         <i className="ri-wechat-fill text-3xl text-primary"></i>
-                         <h1 className="text-2xl uppercase text-center font-semibold text-primary">Bembe-Chat Register</h1>
+               <div className='form-container bg-white shadow-md p-5 flex flex-col gap-5 w-96'>
+                    <div className='container flex justify-center gap-2 items-center'>
+                         <i className="ri-wechat-fill text-3xl text-primary chat-icon"></i>
+                         <h1 className="register-title text-2xl uppercase text-center font-semibold text-primary">Bembe-Chat Register</h1>
                     </div>
 
                     <hr />
@@ -63,9 +64,9 @@ function Register() {
                          placeholder="Enter your password"
                          className={user.password ? 'border-green-500' : 'border-red-500'}
                     />
-                    <button className={user.name && user.email && user.password ? 'contained-btn' : 'disabled-btn'} onClick={register}>Register</button>
+                    <button className={user.name && user.email && user.password ? 'contained-btn register-button' : 'disabled-btn register-button'} onClick={register}>Register</button>
                     <Link to='/login'
-                         className='underline text-center'
+                         className='underline text-center login-link'
                     >
                          Already have an account? Login
                     </Link>

@@ -159,7 +159,7 @@ function UsersList({ searchKey, onlineUsers }) {
                 };
                 return (
                     <div className={`all-users shadow-sm w-full border p-3 bg-white flex justify-between items-center cursor-pointer
-                                   ${getIsSelectedChatOrNot(userObj) && 'border-primary border-2'}
+                                   ${getIsSelectedChatOrNot(userObj) && 'bg-blue-200 border-2'}
                               `}
                         key={userObj._id}
                         onClick={() => openChat(userObj._id)}
