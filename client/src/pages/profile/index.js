@@ -44,30 +44,30 @@ export const Profile = () => {
     }, [user]);
 
     return (
-        user && <div className='text-xl font-semibold uppercase text-gray-500 flex flex-col gap-2 shadow-md border p-5 w-max'>
+        user &&
+        <div className='text-[12px] md:text-[22px] xl:mt-20 mt-16 md:mt-24 ipad4:w-[70vw] mx-auto font-semibold 2xl:mt-28 2xl:w-[50vw] uppercase text-gray-500 flex flex-col gap-2 shadow-md border p-5 items-center'>
             <h1 >{user.name}</h1>
             <h1 >{user.email}</h1>
             <h1>Created At: {moment(user.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</h1>
-            {
 
+            <div className='flex gap-3 flex-col items-center justify-center'>{
                 image &&
                 (<img
                     src={image}
                     alt="profile pic"
-                    className='w-32 h-32 rounded-full'
+                    className='w-24 h-24 md:w-32 md:h-32 rounded-full'
                 />)
             }
-            <div className='flex gap-3'>
-                <label htmlFor="file-input" className='cursor-pointer'>
+                <label htmlFor="file-input text-[12px] md:text-[18px]" className='cursor-pointer text-[12px] md:text-[22px]'>
                     Update Profile Pic
                 </label>
                 <input
                     type="file"
                     onChange={onFileSelect}
-                    className='border-none file-input'
+                    className='border-none file-input text-[12px] md:text-[22px]'
                 />
                 <button
-                    className='contained-btn xl:px-2'
+                    className='contained-btn px-2 md:text-[22px]'
                     onClick={updateProfilePic}
                 >
                     Update

@@ -110,7 +110,7 @@ function UsersList({ searchKey, onlineUsers }) {
         );
         if (chat && chat?.unreadMessages && chat?.lastMessage?.sender !== user._id) {
             return (
-                <div className='bg-blue-500 text-white rounded-full'
+                <div className='bg-blue-500 text-white h-7 w-7 flex justify-center items-center rounded-full'
                     key={chat._id}
                 >
                     {chat?.unreadMessages}
@@ -156,13 +156,13 @@ function UsersList({ searchKey, onlineUsers }) {
                     userObj = chatObjOrUserObj.members.find((mem) => mem._id !== user._id);
                 };
                 return (
-                    <div className={`all-users shadow-sm w-full border p-4 bg-white flex justify-between items-center cursor-pointer
+                    <div className={`all-users shadow-sm w-full  border p-4 bg-white flex justify-between items-center cursor-pointer
                                    ${getIsSelectedChatOrNot(userObj) && 'bg-blue-200 border-2'}
                               `}
                         key={userObj._id}
                         onClick={() => openChat(userObj._id)}
                     >
-                        <div className='flex gap-5 h-12 items-center'>
+                        <div className='flex gap-5 h-12 2xl:w-full items-center'>
                             {
                                 userObj.profilePic &&
                                 (
@@ -172,7 +172,7 @@ function UsersList({ searchKey, onlineUsers }) {
                                         <img
                                             src={userObj.profilePic}
                                             alt='profile pic'
-                                            className='rounded-full h-12 w-12 ipad4:h-[60px] ipad4:w-[60px] object-cover'
+                                            className='rounded-full h-12 w-12 ipad4:h-[60px] ipad4:w-[60px] 2xl:h-[60px] 2xl:w-[175px] object-cover'
                                         />
                                         {
                                             onlineUsers.includes(userObj._id) ?

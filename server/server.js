@@ -31,7 +31,7 @@ io.on('connection', (socket) => {
         socket.join(userId);
     });
     // Send message to clients (who are present in members array)
-    socket.on('send-message', (message) => {
+    socket.once('send-message', (message) => {
         io.to(message.members[0])
             .to(message.members[1])
             .emit('receive-message', message);

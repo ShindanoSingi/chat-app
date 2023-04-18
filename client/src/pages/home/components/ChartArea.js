@@ -12,9 +12,6 @@ import store from '../../../redux/store';
 import EmojiPicker from 'emoji-picker-react';
 import { BsFillEmojiSmileFill } from 'react-icons/bs';
 import { BiLinkAlt } from 'react-icons/bi';
-import { AiFillAudio } from 'react-icons/ai';
-
-
 
 function ChartArea({ socket }) {
      const [showEmojiPicker, setShowEmojiPicker] = useState(false);
@@ -264,7 +261,7 @@ function ChartArea({ socket }) {
                     <div className="h-12 mt-2 rounded-xl border-gray-300 shadow border flex justify-between px-1.5 items-center">
                          {
                               showEmojiPicker &&
-                              (<div className='absolute bottom-[-40px] xl:bottom-20'>
+                              (<div className='absolute bottom-[-40px] xl:bottom-20 2xl:bottom-28'>
                                    <EmojiPicker
                                         height={350}
                                         onEmojiClick={(e) => {
