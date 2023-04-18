@@ -67,7 +67,7 @@ export const Profile = () => {
                     className='border-none file-input'
                 />
                 <button
-                    className='contained-btn'
+                    className='contained-btn xl:px-2'
                     onClick={updateProfilePic}
                 >
                     Update

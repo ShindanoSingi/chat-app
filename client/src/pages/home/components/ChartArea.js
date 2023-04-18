@@ -196,7 +196,7 @@ function ChartArea({ socket }) {
      }, [messages, isRecipientTyping]);
 
      return (
-          <div className='bg-white h-[58vh] md:h-[62vh] ipad4:h-[60vh] border rounded-2xl flex flex-col justify-between p-3'>
+          <div className='bg-white h-[58vh] md:h-[62vh] ipad4:h-[60vh] xl:h-[87vh] border rounded-2xl xl:mt-[66px] flex flex-col justify-between p-3'>
                {/* 1st part receipient user */}
                <div>
                     <div className='flex gap-5 items-center mb-2'>
@@ -204,14 +204,14 @@ function ChartArea({ socket }) {
                               <img
                                    src={receipientUser.profilePic}
                                    alt='profile pic'
-                                   className='rounded-full h-10 w-10'
+                                   className='rounded-full h-10 w-10 ipad4:h-[60px] ipad4:w-[60px]'
                               />
                          )}
                          {!receipientUser.profilePic && (
                               <div className='bg-gray-500 text-white rounded-full h-10 w-10 flex items-center justify-center'>
                                    <h1 className='uppercase text-xl font-semibold'>{receipientUser.name[0]}</h1>
                               </div>)}
-                         <h1 className='uppercase'>{receipientUser.name}</h1>
+                         <h1 className='uppercase ipad4:text-xl'>{receipientUser.name}</h1>
                     </div>
                     <hr />
                </div>
@@ -225,18 +225,18 @@ function ChartArea({ socket }) {
                                    return (
                                         <div key={index} className={`flex ${isCurrentUserIsSender && 'justify-end'}`} >
                                              <div className={` ${isCurrentUserIsSender ? 'flex flex-col items-end rounded-tr-none pb-2 px-2 rounded-xl bg-primary p-2' : 'flex flex-col items-start rounded-tl-none pb-2 px-2 rounded-xl bg-gray-300 w-fit p-2'}`}>
-                                                  {message.text && <h1 className={`text-sm  ${isCurrentUserIsSender ? 'text-white' : 'text-gray-700'}`}>{message.text}</h1>}
+                                                  {message.text && <h1 className={`text-sm ipad4:text-lg  ${isCurrentUserIsSender ? 'text-white' : 'text-gray-700 ipad4:text-lg'}`}>{message.text}</h1>}
                                                   {message.image && <img src={message.image} alt='message_image' className='w-32 h-32 rounded-xl' />}
                                                   <h1 className='text-xs text-gray-500  relative'>
                                                        {
                                                             getDateInRegulatarFormat(message.createdAt) === 'Today' ?
-                                                                 <h1 className='text-center'>
+                                                                 <h1 className='text-center ipad4:text-lg'>
                                                                       {
                                                                            moment(message.createdAt).format('hh:mm A')
                                                                       }
                                                                  </h1>
                                                                  :
-                                                                 <h1 className='text-center'>
+                                                                 <h1 className='text-center ipad4:text-lg'>
                                                                       {
                                                                            getDateInRegulatarFormat(message.createdAt)
                                                                       }
@@ -264,7 +264,7 @@ function ChartArea({ socket }) {
                     <div className="h-12 mt-2 rounded-xl border-gray-300 shadow border flex justify-between px-1.5 items-center">
                          {
                               showEmojiPicker &&
-                              (<div className='absolute bottom-[-40px]'>
+                              (<div className='absolute bottom-[-40px] xl:bottom-20'>
                                    <EmojiPicker
                                         height={350}
                                         onEmojiClick={(e) => {

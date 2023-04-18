@@ -47,9 +47,9 @@ function ProtectedRoute({ children }) {
      }, []);
 
      return (
-          <div className='h-screen w-screen bg-gray-100 px-2'>
+          <div className='h-screen w-screen bg-gray-100 px-2 xl:px-0'>
                {/* Header */}
-               <div className='flex justify-between p-2 bg-primary text-white rounded fixed w-[95%] md:mx-2.5 top-[-1px] z-50'>
+               <div className='flex justify-between p-2 bg-primary text-white rounded fixed w-[95%] md:mx-2.5 xl:w-[100vw] xl:mx-0 top-[-1px] z-50'>
                     <div className='flex items-center gap-1'>
                          <i className="ri-wechat-fill text-2xl md:text-4xl"></i>
                          <h1 className=' text-[12px] md:text-[24px] text-white uppercase font-semibold'>Bembe-Chat</h1>

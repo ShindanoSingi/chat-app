@@ -25,9 +25,9 @@ function Home() {
     }, [user]);
 
     return (
-        <div className='flex gap-5 flex-col items-center'>
+        <div className='flex gap-5 flex-col xl:flex-row items-center xl:items-start'>
             {/* 1st part: user search, userslist/chatlist  */}
-            <div className='w-[95vw]'>
+            <div className='w-[95vw] xl:w-[35%]'>
                 <UserSearch
                     searchKey={searchKey}
                     setSearchKey={setSearchKey}
@@ -43,7 +43,7 @@ function Home() {
             )}
             {
                 !selectedChat && (
-                    <div className='w-[95vw] h-[80vh] md:h-[63vh] flex items-center justify-center bg-white flex-col'>
+                    <div className='w-[95vw] h-[80vh] md:h-[63vh xl:h-[92vh] flex items-center xl:mt-[68px] justify-center bg-white flex-col'>
                         <img
                             src="https://www.pngmart.com/files/16/Speech-Chat-Icon-Transparent-PNG.png"
                             alt="Speech-Chat-Icon"

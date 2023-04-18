@@ -8,7 +8,7 @@ module.exports = {
       xs: '320px',
       sm: '480px',
       md: '768px',
-      ipad4: '820px',
+      ipad4: '800px',
       lg: '1024px',
       xl: '1280px',
       '2xl': '1536px',

@@ -148,7 +148,7 @@ function UsersList({ searchKey, onlineUsers }) {
     }, []);
 
     return (
-        <div className='flex flex-col h-[140px] ipad4:h-[230px] overflow-auto gap-2 mt-5 w-full'>
+        <div className='flex flex-col h-[140px] ipad4:h-[230px] xl:h-[90vh] overflow-auto gap-2 mt-5 w-full'>
             {getData().map((chatObjOrUserObj) => {
                 let userObj = chatObjOrUserObj;
 
