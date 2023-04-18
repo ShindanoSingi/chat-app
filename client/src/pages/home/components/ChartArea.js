@@ -196,7 +196,7 @@ function ChartArea({ socket }) {
      }, [messages, isRecipientTyping]);
 
      return (
-          <div className='bg-white h-[67vh] border rounded-2xl w-w-[95%] flex flex-col justify-between p-3'>
+          <div className='bg-white h-[58vh] md:h-[62vh] ipad4:h-[60vh] border rounded-2xl flex flex-col justify-between p-3'>
                {/* 1st part receipient user */}
                <div>
                     <div className='flex gap-5 items-center mb-2'>
@@ -224,7 +224,7 @@ function ChartArea({ socket }) {
                                    const isCurrentUserIsSender = message.sender === user._id;
                                    return (
                                         <div key={index} className={`flex ${isCurrentUserIsSender && 'justify-end'}`} >
-                                             <div className={` ${isCurrentUserIsSender ? 'flex flex-col items-end rounded-bl-none pb-2 px-2 rounded-xl bg-primary p-2' : 'flex flex-col items-start rounded-tl-none pb-2 px-2 rounded-xl bg-gray-300 w-fit p-2'}`}>
+                                             <div className={` ${isCurrentUserIsSender ? 'flex flex-col items-end rounded-tr-none pb-2 px-2 rounded-xl bg-primary p-2' : 'flex flex-col items-start rounded-tl-none pb-2 px-2 rounded-xl bg-gray-300 w-fit p-2'}`}>
                                                   {message.text && <h1 className={`text-sm  ${isCurrentUserIsSender ? 'text-white' : 'text-gray-700'}`}>{message.text}</h1>}
                                                   {message.image && <img src={message.image} alt='message_image' className='w-32 h-32 rounded-xl' />}
                                                   <h1 className='text-xs text-gray-500  relative'>
@@ -278,7 +278,7 @@ function ChartArea({ socket }) {
                          />
 
                          <label for='file'>
-                              <BiLinkAlt typeof='file' className='text-xl ml-2 text-primary cursor-pointer'
+                              <BiLinkAlt typeof='file' className='text-xl md:text-2xl ml-2 text-primary cursor-pointer'
                               />
                               <input
                                    type="file"
@@ -291,7 +291,7 @@ function ChartArea({ socket }) {
                          <input
                               type="text"
                               placeholder='Type a message'
-                              className="w-full mr-2 border-0 h-full border-none rounded-xl focus:border-none"
+                              className="w-full mr-2 border-0 h-full md:text-xl border-none rounded-xl focus:border-none"
                               value={newMessage}
                               onChange={(e) => {
                                    setNewMessage(e.target.value);

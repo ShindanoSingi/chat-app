@@ -43,7 +43,7 @@ function Home() {
             )}
             {
                 !selectedChat && (
-                    <div className='w-[95vw] h-[80vh] flex items-center justify-center bg-white flex-col'>
+                    <div className='w-[95vw] h-[80vh] md:h-[63vh] flex items-center justify-center bg-white flex-col'>
                         <img
                             src="https://www.pngmart.com/files/16/Speech-Chat-Icon-Transparent-PNG.png"
                             alt="Speech-Chat-Icon"

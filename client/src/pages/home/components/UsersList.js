@@ -91,13 +91,13 @@ function UsersList({ searchKey, onlineUsers }) {
         } else {
             const lastMsgPerson = chats.lastMessage?.sender === user._id ? 'You:' : "";
             return (
-                <div key={userObj._id} className='flex justify-between gap-8 w-[65vw]'>
-                    <h1 className='text-gray-600 truncate line-clamp-1 text-sm'>
+                <div key={userObj._id} className='flex justify-between '>
+                    <h1 className='text-gray-600 truncate ipad4:text-lg line-clamp-1 text-sm'>
                         {lastMsgPerson} {chats.lastMessage?.text}
                     </h1>
                     <h1 className='flex gap-1 flex-col items-center'>
-                        <p className='text-gray-500 text-xs'>{getDateInRegulatarFormat(chats?.lastMessage?.createdAt)}</p>
-                        <p className='text-gray-500 text-xs'>{moment(chats.lastMessage?.createdAt).format('hh:mm A')}</p>
+                        <p className='text-gray-500 text-xs ipad4:text-[16px]'>{getDateInRegulatarFormat(chats?.lastMessage?.createdAt)}</p>
+                        <p className='text-gray-500 text-xs ipad4:text-[16px]'>{moment(chats.lastMessage?.createdAt).format('hh:mm A')}</p>
                     </h1>
                 </div>
             )
@@ -110,7 +110,7 @@ function UsersList({ searchKey, onlineUsers }) {
         );
         if (chat && chat?.unreadMessages && chat?.lastMessage?.sender !== user._id) {
             return (
-                <div className='bg-blue-500 text-white rounded-full px-[9px]'
+                <div className='bg-blue-500 text-white rounded-full'
                     key={chat._id}
                 >
                     {chat?.unreadMessages}
@@ -148,7 +148,7 @@ function UsersList({ searchKey, onlineUsers }) {
     }, []);
 
     return (
-        <div className='flex flex-col h-32 overflow-auto gap-2 mt-5 w-full'>
+        <div className='flex flex-col h-[140px] ipad4:h-[230px] overflow-auto gap-2 mt-5 w-full'>
             {getData().map((chatObjOrUserObj) => {
                 let userObj = chatObjOrUserObj;
 
@@ -156,7 +156,7 @@ function UsersList({ searchKey, onlineUsers }) {
                     userObj = chatObjOrUserObj.members.find((mem) => mem._id !== user._id);
                 };
                 return (
-                    <div className={`all-users shadow-sm w-full border p-3 bg-white flex justify-between items-center cursor-pointer
+                    <div className={`all-users shadow-sm w-full border p-4 bg-white flex justify-between items-center cursor-pointer
                                    ${getIsSelectedChatOrNot(userObj) && 'bg-blue-200 border-2'}
                               `}
                         key={userObj._id}
@@ -167,20 +167,21 @@ function UsersList({ searchKey, onlineUsers }) {
                                 userObj.profilePic &&
                                 (
 
-                                    <div className='rounded-full h-11 w-14 items-center justify-center relative'>
+                                    // Image with online status.
+                                    <div className='relative'>
                                         <img
                                             src={userObj.profilePic}
                                             alt='profile pic'
-                                            className='rounded-full h-11 w-11 object-cover'
+                                            className='rounded-full h-12 w-12 ipad4:h-[60px] ipad4:w-[60px] object-cover'
                                         />
                                         {
                                             onlineUsers.includes(userObj._id) ?
                                                 <div>
-                                                    <div className='bg-green-600 h-3 w-3 rounded-full absolute bottom-[2px] right-1'>
+                                                    <div className='bg-green-600 h-3 w-3 rounded-full absolute bottom-[2px] right-1 ipad4:right-0 ipad4:h-4 ipad4:w-4'>
                                                     </div>
                                                 </div> :
                                                 <div>
-                                                    <div className='bg-orange-300 h-3 w-3 rounded-full absolute bottom-[2px] right-1'>
+                                                    <div className='bg-orange-300 h-3 w-3 rounded-full absolute bottom-[2px] right-1 ipad4:right-0 ipad4:h-4 ipad4:w-4'>
                                                     </div>
                                                 </div>
                                         }
@@ -188,30 +189,31 @@ function UsersList({ searchKey, onlineUsers }) {
 
                                 )
                             }
+
                             {
                                 !userObj.profilePic &&
                                 (
-                                    <div className='bg-gray-500 text-white rounded-full h-11 w-11 flex p-5 items-center justify-center relative'>
-                                        <h1 className='uppercase text-xl font-semibold'>
+                                    <div className='bg-gray-500 text-white rounded-full h-11 w-11 ipad4:h-[60px] ipad4:w-[60px] flex p-5 items-center justify-center relative'>
+                                        <h1 className='uppercase text-xl font-semibold ipad4:text-3xl'>
                                             {userObj.name[0]}
                                         </h1>
                                         {
                                             onlineUsers.includes(userObj._id) ?
                                                 <div>
-                                                    <div className='bg-green-600 h-3 w-3 rounded-full absolute bottom-[2px] right-1'>
+                                                    <div className='bg-green-600 h-3 w-3 ipad4:h-4 ipad4:w-4 rounded-full absolute bottom-[2px] right-2 ipad4:right-0'>
                                                     </div>
                                                 </div> :
                                                 <div>
-                                                    <div className='bg-orange-300 h-3 w-3 rounded-full absolute bottom-[2px] right-1'>
+                                                    <div className='bg-orange-300 h-3 w-3 ipad4:h-4 ipad4:w-4 rounded-full absolute bottom-[2px] right-2 ipad4:right-0 '>
                                                     </div>
                                                 </div>
                                         }
                                     </div>
                                 )
                             }
-                            <div className='flex flex-col gap-1  w-full'>
-                                <div className='flex gap-4 w-full'>
-                                    <h1>{userObj.name}</h1>
+                            <div className='flex flex-col gap-1  w-[82vw] p-2 '>
+                                <div className='flex gap-4 w-full '>
+                                    <h1 className='ipad4:text-xl'>{userObj.name}</h1>
                                     {getUnreadMessages(userObj)}
                                 </div>
                                 {getLastMsg(userObj)}

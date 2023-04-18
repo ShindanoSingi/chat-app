@@ -49,22 +49,22 @@ function ProtectedRoute({ children }) {
      return (
           <div className='h-screen w-screen bg-gray-100 px-2'>
                {/* Header */}
-               <div className='flex justify-between p-2 bg-primary text-white rounded'>
+               <div className='flex justify-between p-2 bg-primary text-white rounded fixed w-[95%] md:mx-2.5 top-[-1px] z-50'>
                     <div className='flex items-center gap-1'>
-                         <i className="ri-wechat-fill text-2xl"></i>
-                         <h1 className=' text-[12px] text-white uppercase font-semibold'>Bembe-Chat</h1>
+                         <i className="ri-wechat-fill text-2xl md:text-4xl"></i>
+                         <h1 className=' text-[12px] md:text-[24px] text-white uppercase font-semibold'>Bembe-Chat</h1>
                     </div>
                     <div className='flex gap-2 items-center text-xl bg-white p-1 px-2 rounded-xl'>
                          {
                               user?.profilePic ? (
-                                   <img src={user?.profilePic} alt="profile pic" className='w-6 h-6 rounded-full' />
+                                   <img src={user?.profilePic} alt="profile pic" className='w-6 h-6 md:h-12 md:w-12 rounded-full' />
                               ) : <FaUserCircle className='text-xl' />
                          }
-                         <h2 className='underline text-primary text-[14px]'
+                         <h2 className='underline text-primary text-[14px] md:text-[24px]'
                               onClick={() => { navigate('/profile') }}
                          >{user?.name}</h2>
                          <AiOutlineLogout
-                              className='text-xl ml-3 text-primary curse-pointer'
+                              className='text-xl md:text-2xl md:font-extrabold ml-3 text-primary curse-pointer'
                               onClick={() => {
                                    localStorage.removeItem("token");
                                    navigate('/login');
