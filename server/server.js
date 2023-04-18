@@ -31,7 +31,7 @@ io.on('connection', (socket) => {
         socket.join(userId);
     });
     // Send message to clients (who are present in members array)
-    socket.once('send-message', (message) => {
+    socket.on('send-message', (message) => {
         io.to(message.members[0])
             .to(message.members[1])
             .emit('receive-message', message);
@@ -57,6 +57,13 @@ io.on('connection', (socket) => {
             onlineUsers.push(userId);
         }
         io.emit('online-users', onlineUsers);
+    });
+
+    // Went offline
+    socket.on('went-offline', (userId) => {
+        onlineUsers = onlineUsers.filter((user) => user !== userId);
+        localStorage.removeItem('token');
+        io.emit('online-users-updated', onlineUsers);
     });
 });
 

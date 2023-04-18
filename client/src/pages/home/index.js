@@ -5,6 +5,8 @@ import UserSearch from './components/UserSearch'
 import UsersList from './components/UsersList';
 import { io } from 'socket.io-client';
 const socket = io('http://localhost:8080');
+localStorage.setItem('socket', socket);
+
 
 function Home() {
     const [searchKey, setSearchKey] = useState('');
@@ -32,7 +34,7 @@ function Home() {
                     searchKey={searchKey}
                     setSearchKey={setSearchKey}
                 />
-                <UsersList searchKey={searchKey} onlineUsers={onlineUsers} />
+                <UsersList searchKey={searchKey} onlineUsers={onlineUsers} socket={socket} />
             </div>
             {/* 2nd part: chatbox  */}
 

@@ -9,6 +9,9 @@ import { SetUser, SetAllUsers, SetAllChats } from '../redux/userSlice';
 import { FaUserCircle } from 'react-icons/fa';
 import { AiOutlineLogout } from 'react-icons/ai'
 import { GetAllChats } from '../apicalls/chats';
+import { io } from 'socket.io-client';
+const socket = io('http://localhost:8080');
+localStorage.setItem('socket', socket);
 
 
 function ProtectedRoute({ children }) {
@@ -66,6 +69,7 @@ function ProtectedRoute({ children }) {
                          <AiOutlineLogout
                               className='text-xl md:text-2xl md:font-extrabold ml-3 text-primary curse-pointer'
                               onClick={() => {
+                                   socket.emit('went-offline', user._id);
                                    localStorage.removeItem("token");
                                    navigate('/login');
                               }}

@@ -7,11 +7,9 @@ import { toast } from 'react-hot-toast';
 import moment from 'moment';
 import { CreateNewChat } from '../../../apicalls/chats';
 import store from '../../../redux/store';
-import { io } from 'socket.io-client';
-const socket = io('http://localhost:8080');
 
 
-function UsersList({ searchKey, onlineUsers }) {
+function UsersList({ searchKey, onlineUsers, socket }) {
     const { allUsers, allChats, user, selectedChat } = useSelector((state) => state.userReducer);
     const dispatch = useDispatch();
 
@@ -26,6 +24,7 @@ function UsersList({ searchKey, onlineUsers }) {
                 const updatedChats = [...allChats, newChat];
                 dispatch(SetAllChats(updatedChats));
                 dispatch(SetSelectedChat(newChat));
+
             } else {
                 toast.error(response.message);
             }
@@ -222,7 +221,7 @@ function UsersList({ searchKey, onlineUsers }) {
                         <div onClick={() => createNewChat(userObj._id)}>
                             {
                                 !allChats.find((chat) => chat.members.map((mem) => mem._id).includes(userObj._id)) && (
-                                    <button className='border-primary border text-primary bg-white p-1 rounded-lg'
+                                    <button className='border-primary border text-primary relative right-[90px] md:right-[120px] md:w-[120px] bg-white p-1 rounded-lg'
                                         key={userObj._id}
                                     >
                                         Create Chat
