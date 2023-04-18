@@ -47,20 +47,20 @@ function ProtectedRoute({ children }) {
      }, []);
 
      return (
-          <div className='h-screen w-screen bg-gray-100 p-2'>
+          <div className='h-screen w-screen bg-gray-100 px-2'>
                {/* Header */}
-               <div className='flex justify-between p-5 bg-primary text-white rounded'>
+               <div className='flex justify-between p-2 bg-primary text-white rounded'>
                     <div className='flex items-center gap-1'>
-                         <i className="ri-wechat-fill text-3xl"></i>
-                         <h1 className=' text-2xl text-white uppercase font-semibold'>Bembe-Chat</h1>
+                         <i className="ri-wechat-fill text-2xl"></i>
+                         <h1 className=' text-[12px] text-white uppercase font-semibold'>Bembe-Chat</h1>
                     </div>
                     <div className='flex gap-2 items-center text-xl bg-white p-1 px-2 rounded-xl'>
                          {
                               user?.profilePic ? (
-                                   <img src={user?.profilePic} alt="profile pic" className='w-10 h-10 rounded-full' />
+                                   <img src={user?.profilePic} alt="profile pic" className='w-6 h-6 rounded-full' />
                               ) : <FaUserCircle className='text-xl' />
                          }
-                         <h2 className='underline text-primary'
+                         <h2 className='underline text-primary text-[14px]'
                               onClick={() => { navigate('/profile') }}
                          >{user?.name}</h2>
                          <AiOutlineLogout

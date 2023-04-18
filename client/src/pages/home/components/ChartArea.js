@@ -196,7 +196,7 @@ function ChartArea({ socket }) {
      }, [messages, isRecipientTyping]);
 
      return (
-          <div className='bg-white h-[80vh] border rounded-2xl w-full flex flex-col justify-between p-5'>
+          <div className='bg-white h-[67vh] border rounded-2xl w-w-[95%] flex flex-col justify-between p-3'>
                {/* 1st part receipient user */}
                <div>
                     <div className='flex gap-5 items-center mb-2'>
@@ -217,7 +217,7 @@ function ChartArea({ socket }) {
                </div>
 
                {/* 2nd part chat messages */}
-               <div className='h-[62vh] overflow-scroll px-5 scrollbar-hide' id='messages'>
+               <div className='h-[62vh] overflow-scroll px-5 pt-2 scrollbar-hide' id='messages'>
                     <div className='flex flex-col gap-2'>
                          {
                               messages.map((message, index) => {
@@ -261,10 +261,10 @@ function ChartArea({ socket }) {
 
                {/* 3rd part chat input */}
                <div>
-                    <div className="h-16 mt-2 rounded-xl border-gray-300 shadow border flex justify-between p-2 items-center">
+                    <div className="h-12 mt-2 rounded-xl border-gray-300 shadow border flex justify-between px-1.5 items-center">
                          {
                               showEmojiPicker &&
-                              (<div className='absolute bottom-[175px]'>
+                              (<div className='absolute bottom-[-40px]'>
                                    <EmojiPicker
                                         height={350}
                                         onEmojiClick={(e) => {
@@ -273,12 +273,12 @@ function ChartArea({ socket }) {
                                    />
                               </div>)
                          }
-                         <BsFillEmojiSmileFill className='text-4xl m-2 text-primary cursor-pointer'
+                         <BsFillEmojiSmileFill className='text-4xl mb-0 text-primary cursor-pointer'
                               onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                          />
 
                          <label for='file'>
-                              <BiLinkAlt typeof='file' className='text-4xl ml-2 text-primary cursor-pointer'
+                              <BiLinkAlt typeof='file' className='text-xl ml-2 text-primary cursor-pointer'
                               />
                               <input
                                    type="file"
@@ -291,7 +291,7 @@ function ChartArea({ socket }) {
                          <input
                               type="text"
                               placeholder='Type a message'
-                              className="w-[90%] mr-2 border-0 h-full border-none rounded-xl focus:border-none"
+                              className="w-full mr-2 border-0 h-full border-none rounded-xl focus:border-none"
                               value={newMessage}
                               onChange={(e) => {
                                    setNewMessage(e.target.value);
@@ -304,10 +304,10 @@ function ChartArea({ socket }) {
                               }}
                          />
                          <button
-                              className='bg-primary text-white p-3 rounded-xl px-6'
+                              className='bg-primary text-white p-2 rounded-xl px-4'
                               onClick={() => { sendNewMessage('') }}
                          >
-                              <RiSendPlaneFill className='text-2xl' />
+                              <RiSendPlaneFill className='text-xl' />
                          </button>
 
                     </div>
