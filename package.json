@@ -3,13 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "main": "server/server.js",
-  "engines": {
-    "node": "14.17.6",
-    "npm": "6.14.15"
-  },
   "scripts": {
-    "build": "cd server && npm install && cd ../client && npm install && cd ..",
-    "start": "node server/server.js",
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
