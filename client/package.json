@@ -26,11 +26,18 @@
     "tailwind-scrollbar-hide": "^1.1.7",
     "web-vitals": "^2.1.4"
   },
+  "engines": {
+    "node": "14.17.6",
+    "npm": "6.14.15"
+  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "cd server && npm install && cd ../client && npm install && cd ..",
+    "start": "node client/src/App.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShindanoSingi/chat-app.git"
   },
   "eslintConfig": {
     "extends": [
