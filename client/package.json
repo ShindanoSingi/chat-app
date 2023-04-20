@@ -24,7 +24,8 @@
     "redux": "^4.2.1",
     "socket.io-client": "^4.6.1",
     "tailwind-scrollbar-hide": "^1.1.7",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "type": "module"
   },
   "engines": {
     "node": "14.17.6",
