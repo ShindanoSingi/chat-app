@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import { toast } from 'react-hot-toast';
-import { UpdateProfilePic, UploadAudio } from '../../apicalls/users';
+import { UpdateProfilePic } from '../../apicalls/users';
 import { useDispatch } from 'react-redux';
 import { hideLoader, showLoader } from '../../redux/loaderSlice';
 

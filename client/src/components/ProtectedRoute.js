@@ -10,7 +10,7 @@ import { FaUserCircle } from 'react-icons/fa';
 import { AiOutlineLogout } from 'react-icons/ai'
 import { GetAllChats } from '../apicalls/chats';
 import { io } from 'socket.io-client';
-const socket = io('http://localhost:8080');
+const socket = io('https://bembe-chat.onrender.com/');
 localStorage.setItem('socket', socket);
 
 
@@ -57,24 +57,27 @@ function ProtectedRoute({ children }) {
                          <i className="ri-wechat-fill text-2xl md:text-4xl"></i>
                          <h1 className=' text-[12px] md:text-[24px] text-white uppercase font-semibold'>Bembe-Chat</h1>
                     </div>
-                    <div className='flex gap-2 items-center text-xl bg-white p-1 px-2 rounded-xl'>
-                         {
-                              user?.profilePic ? (
-                                   <img src={user?.profilePic} alt="profile pic" className='w-6 h-6 md:h-12 md:w-12 rounded-full' />
-                              ) : <FaUserCircle className='text-xl' />
-                         }
-                         <h2 className='underline text-primary text-[14px] md:text-[24px]'
-                              onClick={() => { navigate('/profile') }}
-                         >{user?.name}</h2>
-                         <AiOutlineLogout
-                              className='text-xl md:text-2xl md:font-extrabold ml-3 text-primary curse-pointer'
-                              onClick={() => {
-                                   socket.emit('went-offline', user._id);
-                                   localStorage.removeItem("token");
-                                   navigate('/login');
-                              }}
-                         />
-                    </div>
+                    {
+                         user && (<div className='flex gap-2 items-center text-xl bg-white p-1 px-2 rounded-xl'>
+                              {
+                                   user?.profilePic ? (
+                                        <img src={user?.profilePic} alt="profile pic" className='w-6 h-6 md:h-12 md:w-12 rounded-full' />
+                                   ) : <FaUserCircle className='text-xl' />
+                              }
+                              <h2 className='underline text-primary text-[14px] md:text-[24px]'
+                                   onClick={() => { navigate('/profile') }}
+                              >{user?.name}</h2>
+                              <AiOutlineLogout
+                                   className='text-xl md:text-2xl md:font-extrabold ml-3 text-primary curse-pointer'
+                                   onClick={() => {
+                                        socket.emit('went-offline', user._id);
+                                        localStorage.removeItem("token");
+                                        navigate('/login');
+                                   }}
+                              />
+                         </div>)
+                    }
+
                </div>
                {/* End Header */}
 
