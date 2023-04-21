@@ -10,7 +10,7 @@ import { FaUserCircle } from 'react-icons/fa';
 import { AiOutlineLogout } from 'react-icons/ai'
 import { GetAllChats } from '../apicalls/chats';
 import { io } from 'socket.io-client';
-const socket = io('https://bembe-chat.onrender.com');
+const socket = io('http://localhost:8080');
 localStorage.setItem('socket', socket);
 
 
