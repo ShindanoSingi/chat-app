@@ -1,0 +1,30 @@
+[debug] [2023-04-23T07:32:57.920Z] ----------------------------------------------------------------------
+[debug] [2023-04-23T07:32:57.921Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2023-04-23T07:32:57.922Z] CLI Version:   11.22.0
+[debug] [2023-04-23T07:32:57.922Z] Platform:      darwin
+[debug] [2023-04-23T07:32:57.923Z] Node Version:  v16.15.1
+[debug] [2023-04-23T07:32:57.924Z] Time:          Sun Apr 23 2023 03:32:57 GMT-0400 (Eastern Daylight Time)
+[debug] [2023-04-23T07:32:57.925Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-04-23T07:32:58.024Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-04-23T07:32:58.025Z] > authorizing via signed-in user (shindanosingi1@gmail.com)
+[debug] [2023-04-23T07:32:58.025Z] [iam] checking project bembe-chat for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2023-04-23T07:32:58.026Z] > refreshing access token with scopes: []
+[debug] [2023-04-23T07:32:58.028Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2023-04-23T07:32:58.029Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-04-23T07:32:58.504Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2023-04-23T07:32:58.507Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-04-23T07:32:58.529Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/bembe-chat:testIamPermissions [none]
+[debug] [2023-04-23T07:32:58.529Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/bembe-chat:testIamPermissions x-goog-quota-user=projects/bembe-chat
+[debug] [2023-04-23T07:32:58.531Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/bembe-chat:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-04-23T07:32:59.073Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/bembe-chat:testIamPermissions 200
+[debug] [2023-04-23T07:32:59.076Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/bembe-chat:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-04-23T07:32:59.078Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/bembe-chat [none]
+[debug] [2023-04-23T07:32:59.583Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/bembe-chat 200
+[debug] [2023-04-23T07:32:59.584Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/bembe-chat {"projectId":"bembe-chat","projectNumber":"398292373013","displayName":"bembe chat","name":"projects/bembe-chat","resources":{"hostingSite":"bembe-chat"},"state":"ACTIVE","etag":"1_0264ea1a-1c71-478a-ac9e-078c2bb198a3"}
+[info] 
+[info] === Deploying to 'bembe-chat'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2023-04-23T07:32:59.595Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/bembe-chat/versions [none]
+[debug] [2023-04-23T07:32:59.596Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/bembe-chat/versions {"status":"CREATED","labels":{"deployment-tool":"cli-firebase"}}

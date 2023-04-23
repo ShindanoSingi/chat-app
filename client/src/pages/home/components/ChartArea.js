@@ -224,22 +224,22 @@ function ChartArea({ socket }) {
                                              <div className={` ${isCurrentUserIsSender ? 'flex flex-col items-end rounded-tr-none pb-2 px-2 rounded-xl bg-primary p-2' : 'flex flex-col items-start rounded-tl-none pb-2 px-2 rounded-xl bg-gray-300 w-fit p-2'}`}>
                                                   {message.text && <h1 className={`text-sm ipad4:text-lg  ${isCurrentUserIsSender ? 'text-white' : 'text-gray-700 ipad4:text-lg'}`}>{message.text}</h1>}
                                                   {message.image && <img src={message.image} alt='message_image' className='w-32 h-32 rounded-xl' />}
-                                                  <h1 className='text-xs text-gray-500  relative'>
+                                                  <div className='text-xs text-gray-500  relative'>
                                                        {
                                                             getDateInRegulatarFormat(message.createdAt) === 'Today' ?
-                                                                 <h1 className='text-center ipad4:text-lg'>
+                                                                 <h1 className='text-center ipad4:text-sm'>
                                                                       {
                                                                            moment(message.createdAt).format('hh:mm A')
                                                                       }
                                                                  </h1>
                                                                  :
-                                                                 <h1 className='text-center ipad4:text-lg'>
+                                                                 <h1 className='text-center ipad4:text-sm'>
                                                                       {
                                                                            getDateInRegulatarFormat(message.createdAt)
                                                                       }
                                                                  </h1>
                                                        }
-                                                  </h1>
+                                                  </div>
 
                                              </div>
                                              {isCurrentUserIsSender && <IoCheckmarkDoneSharp className={`text-2xl ${message.read ? 'text-green-700' : 'text-gray-400'}`} />}

@@ -91,12 +91,12 @@ function UsersList({ searchKey, onlineUsers, socket }) {
             const lastMsgPerson = chats.lastMessage?.sender === user._id ? 'You:' : "";
             return (
                 <div key={userObj._id} className='flex justify-between '>
-                    <h1 className='text-gray-600 truncate ipad4:text-lg line-clamp-1 text-sm'>
+                    <h1 className='text-gray-600 truncate ipad4:text-md line-clamp-1 text-sm'>
                         {lastMsgPerson} {chats.lastMessage?.text}
                     </h1>
                     <h1 className='flex gap-1 flex-col items-center'>
-                        <p className='text-gray-500 text-xs ipad4:text-[16px]'>{getDateInRegulatarFormat(chats?.lastMessage?.createdAt)}</p>
-                        <p className='text-gray-500 text-xs ipad4:text-[16px]'>{moment(chats.lastMessage?.createdAt).format('hh:mm A')}</p>
+                        <p className='text-gray-500 text-xs ipad4:text-sm'>{getDateInRegulatarFormat(chats?.lastMessage?.createdAt)}</p>
+                        <p className='text-gray-500 text-xs ipad4:text-md'>{moment(chats.lastMessage?.createdAt).format('hh:mm A')}</p>
                     </h1>
                 </div>
             )
