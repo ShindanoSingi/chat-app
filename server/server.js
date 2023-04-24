@@ -1,5 +1,5 @@
 const express = require('express');
-require('dotenv').config();
+require('dotenv').config({ path: './config/.env' });
 const app = express();
 const dbConfig = require('./config/dbconfig');
 const PORT = 8080;
@@ -16,7 +16,7 @@ const server = require('http').createServer(app);
 
 const io = require('socket.io')(server, {
     cors: {
-        origin: 'https://bembe-chat.web.app',
+        origin: 'http://localhost:3000',
         methods: ['GET', 'POST'],
     },
 });

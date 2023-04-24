@@ -10,7 +10,7 @@ import { FaUserCircle } from 'react-icons/fa';
 import { AiOutlineLogout } from 'react-icons/ai'
 import { GetAllChats } from '../apicalls/chats';
 import { io } from 'socket.io-client';
-const socket = io('https://bembe-chat.onrender.com');
+const socket = io('http://localhost:8080');
 localStorage.setItem('socket', socket);
 
 
@@ -25,7 +25,6 @@ function ProtectedRoute({ children }) {
                dispatch(showLoader());
                const response = await GetCurrentUser();
                const allUsersResponse = await GetAllUsers();
-
                const allChatsResponse = await GetAllChats();
                dispatch(hideLoader());
                if (response.success) {
@@ -53,30 +52,42 @@ function ProtectedRoute({ children }) {
      return (
           <div className='h-screen w-screen bg-gray-100 px-2 xl:px-0'>
                {/* Header */}
-               <div className='flex justify-between p-2 bg-primary text-white rounded fixed w-[95%] md:mx-2.5 xl:w-[100vw] 2xl:px-6 xl:mx-0 top-[-1px] z-50'>
+               <div className='flex justify-between items-center ite p-2 bg-primary text-white rounded fixed w-[95%] md:mx-2.5 xl:w-[100vw] 2xl:px-6 xl:mx-0 top-[-1px] z-50'>
                     <div className='flex items-center gap-1'>
                          <i className="ri-wechat-fill text-2xl md:text-4xl"></i>
                          <h1 className=' text-[12px] md:text-[24px] text-white uppercase font-semibold'>Bembe-Chat</h1>
                     </div>
                     {
-                         user && (<div className='flex gap-2 items-center text-xl bg-white p-1 px-2 rounded-xl'>
-                              {
-                                   user?.profilePic ? (
-                                        <img src={user?.profilePic} alt="profile pic" className='w-6 h-6 md:h-12 md:w-12 rounded-full' />
-                                   ) : <FaUserCircle className='text-xl' />
-                              }
-                              <h2 className='underline text-primary text-[14px] md:text-[24px]'
-                                   onClick={() => { navigate('/profile') }}
-                              >{user?.name}</h2>
-                              <AiOutlineLogout
-                                   className='text-xl md:text-2xl md:font-extrabold ml-3 text-primary curse-pointer'
-                                   onClick={() => {
-                                        socket.emit('went-offline', user._id);
-                                        localStorage.removeItem("token");
-                                        navigate('/login');
-                                   }}
-                              />
-                         </div>)
+                         user ?
+                              <div className='flex gap-2 items-center text-xl bg-white p-1 px-2 rounded-xl'>
+                                   {
+                                        user?.profilePic ? (
+                                             <img src={user?.profilePic} alt="profile pic" className='w-6 h-6 md:h-12 md:w-12 rounded-full' />
+                                        ) : <FaUserCircle className='text-xl' />
+                                   }
+                                   <h2 className='underline text-primary text-[14px] md:text-[24px]'
+                                        onClick={() => { navigate('/profile') }}
+                                   >{user?.name}</h2>
+                                   <AiOutlineLogout
+                                        className='text-xl md:text-2xl md:font-extrabold text-primary curse-pointer'
+                                        onClick={() => {
+                                             socket.emit('went-offline', user?._id);
+                                             localStorage.removeItem("token");
+                                             navigate('/login');
+                                        }}
+                                   />
+
+                              </div> :
+                              <div className='flex text-xl bg-white rounded-full mr-2 h-8 w-8 items-center justify-center'>
+                                   <AiOutlineLogout
+                                        className='text-xl md:text-2xl md:font-extrabold text-primary curse-pointer'
+                                        onClick={() => {
+                                             socket.emit('went-offline', user?._id);
+                                             localStorage.removeItem("token");
+                                             navigate('/login');
+                                        }}
+                                   />
+                              </div>
                     }
 
                </div>
