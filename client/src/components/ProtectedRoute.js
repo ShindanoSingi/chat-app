@@ -25,6 +25,7 @@ function ProtectedRoute({ children }) {
                dispatch(showLoader());
                const response = await GetCurrentUser();
                const allUsersResponse = await GetAllUsers();
+
                const allChatsResponse = await GetAllChats();
                dispatch(hideLoader());
                if (response.success) {
