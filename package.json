@@ -28,9 +28,13 @@
     "dotenv": "^16.0.3",
     "emoji-picker-react": "^4.4.8",
     "express": "^4.18.2",
+    "file": "^0.2.2",
+    "file-saver": "^2.0.5",
+    "js-file-download": "^0.4.12",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.3",
     "nodemon": "^2.0.22",
+    "saver": "^0.1.1",
     "socket.io": "^4.6.1",
     "yarn": "^1.22.19"
   }

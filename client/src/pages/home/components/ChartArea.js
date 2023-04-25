@@ -12,6 +12,8 @@ import store from '../../../redux/store';
 import EmojiPicker from 'emoji-picker-react';
 import { BsFillEmojiSmileFill } from 'react-icons/bs';
 import { BiLinkAlt } from 'react-icons/bi';
+import axios from 'axios';
+import { fileDownload } from 'js-file-download';
 
 function ChartArea({ socket }) {
      const [showEmojiPicker, setShowEmojiPicker] = useState(false);
@@ -124,6 +126,16 @@ function ChartArea({ socket }) {
           reader.onloadend = async () => {
                sendNewMessage(reader.result);
           };
+     };
+
+     // Download image.
+     const onImageDownloadClick = (url, filename) => {
+          axios.get(url, {
+               responseType: 'blob',
+          })
+               .then((response) => {
+                    fileDownload(response.data, filename);
+               });
      };
 
      useEffect(() => {
@@ -284,6 +296,8 @@ function ChartArea({ socket }) {
                                    className='hidden'
                                    accept='image/gif, image/jpeg, image/png, image/jpg'
                                    onChange={onImageUploadClick}
+                                   onClick={onImageDownloadClick}
+                                   download='allowed'
                               />
                          </label>
                          <input
