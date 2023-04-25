@@ -261,9 +261,10 @@ function ChartArea({ socket }) {
                     <div className="h-12 mt-2 rounded-xl border-gray-300 shadow border flex justify-between px-1.5 items-center">
                          {
                               showEmojiPicker &&
-                              (<div className='absolute bottom-[-40px] xl:bottom-20 2xl:bottom-28'>
+                              (<div className='absolute bottom-20'>
                                    <EmojiPicker
                                         height={350}
+                                        width={300}
                                         onEmojiClick={(e) => {
                                              setNewMessage(newMessage + '' + e.emoji + ' ');
                                         }}
