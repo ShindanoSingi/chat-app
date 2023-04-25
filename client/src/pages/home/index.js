@@ -4,8 +4,8 @@ import ChartArea from './components/ChartArea'
 import UserSearch from './components/UserSearch'
 import UsersList from './components/UsersList';
 import { io } from 'socket.io-client';
-const socket = io('http://localhost:8080');
-localStorage.setItem('socket', socket);
+const socket = io('https://bembe-chat.onrender.com');
+// localStorage.setItem('socket', socket);
 
 
 function Home() {
