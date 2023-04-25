@@ -170,7 +170,7 @@ function UsersList({ searchKey, onlineUsers, socket }) {
                                         <img
                                             src={userObj.profilePic}
                                             alt='profile pic'
-                                            className='rounded-full h-11 w-11 ipad4:h-[60px] ipad4:w-[60px] 2xl:h-[60px] 2xl:w-[175px] object-cover'
+                                            className='rounded-full h-11 w-12 md:h-14 md:w-16 xl:h-16 xl:w-20  object-cover'
                                         />
                                         {
                                             onlineUsers.includes(userObj._id) ?
