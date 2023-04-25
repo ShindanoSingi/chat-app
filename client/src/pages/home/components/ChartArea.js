@@ -303,7 +303,7 @@ function ChartArea({ socket }) {
                          <input
                               type="text"
                               placeholder='Type a message'
-                              className="w-full mr-2 border-0 p-2 md:text-xl border-none rounded-xl focus:border-none"
+                              className="w-full mx-2 border-0 p-2 md:text-xl border-none rounded-xl focus:border-none"
                               value={newMessage}
                               onChange={(e) => {
                                    setNewMessage(e.target.value);
