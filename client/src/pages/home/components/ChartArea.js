@@ -193,7 +193,7 @@ function ChartArea({ socket }) {
      }, [messages, isRecipientTyping]);
 
      return (
-          <div className='bg-white h-[58vh] md:h-[62vh] ipad4:h-[60vh] xl:h-[87vh] border rounded-2xl xl:mt-[66px] flex flex-col justify-between p-3'>
+          <div className='bg-white h-[47vh] md:h-[50vh] xl:h-[85vh] border rounded-2xl xl:mt-[66px] flex flex-col justify-between p-3'>
                {/* 1st part receipient user */}
                <div>
                     <div className='flex gap-5 items-center mb-2'>

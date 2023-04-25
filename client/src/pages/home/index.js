@@ -45,11 +45,11 @@ function Home() {
             )}
             {
                 !selectedChat && (
-                    <div className='w-[95vw] h-[80vh] md:h-[63vh xl:h-[92vh] flex items-center xl:mt-[68px] justify-center bg-white flex-col'>
+                    <div className='w-[95vw] h-[46vh] md:h-[50vh] xl:h-[85vh] flex items-center xl:mt-[68px] rounded-xl justify-center bg-white flex-col'>
                         <img
                             src="https://www.pngmart.com/files/16/Speech-Chat-Icon-Transparent-PNG.png"
                             alt="Speech-Chat-Icon"
-                            className='w-96 h-96 justify-center items-center'
+                            className='w-48 h-48 justify-center items-center'
                         />
                         <h1>Select a user to chat</h1>
                     </div>

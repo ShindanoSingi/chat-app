@@ -90,7 +90,7 @@ function UsersList({ searchKey, onlineUsers, socket }) {
         } else {
             const lastMsgPerson = chats.lastMessage?.sender === user._id ? 'You:' : "";
             return (
-                <div key={userObj._id} className='flex justify-between '>
+                <div key={userObj._id} className=' w-[100%] flex justify-between'>
                     <h1 className='text-gray-600 truncate ipad4:text-md line-clamp-1 text-sm'>
                         {lastMsgPerson} {chats.lastMessage?.text}
                     </h1>
@@ -109,7 +109,7 @@ function UsersList({ searchKey, onlineUsers, socket }) {
         );
         if (chat && chat?.unreadMessages && chat?.lastMessage?.sender !== user._id) {
             return (
-                <div className='bg-blue-500 text-white h-7 w-7 flex justify-center items-center rounded-full'
+                <div className=' text-white h-7 w-7 flex justify-center items-center rounded-full'
                     key={chat._id}
                 >
                     {chat?.unreadMessages}
@@ -147,7 +147,7 @@ function UsersList({ searchKey, onlineUsers, socket }) {
     }, []);
 
     return (
-        <div className='flex flex-col h-[140px] ipad4:h-[230px] xl:h-[90vh] overflow-auto gap-2 mt-5 w-full'>
+        <div className='flex flex-col h-[30vh] xl:h-[75vh] overflow-auto gap-2 mt-5 w-full'>
             {getData().map((chatObjOrUserObj) => {
                 let userObj = chatObjOrUserObj;
 
@@ -155,43 +155,35 @@ function UsersList({ searchKey, onlineUsers, socket }) {
                     userObj = chatObjOrUserObj.members.find((mem) => mem._id !== user._id);
                 };
                 return (
-                    <div className={`all-users shadow-sm w-full  border p-4 bg-white flex justify-between items-center cursor-pointer
+                    <div className={`all-users shadow-sm w-full  border p-2 bg-white flex justify-between items-center cursor-pointer
                                    ${getIsSelectedChatOrNot(userObj) && 'bg-blue-200 border-2'}
                               `}
                         key={userObj._id}
                         onClick={() => openChat(userObj._id)}
                     >
-                        <div className='flex gap-5 h-12 2xl:w-full items-center'>
+                        <div className='flex gap-2 h-12 md:h-16 2xl:w-full items-center w-[100%]'>
                             {
-                                userObj.profilePic &&
-                                (
+                                userObj.profilePic ?
 
                                     // Image with online status.
                                     <div className='relative'>
                                         <img
                                             src={userObj.profilePic}
                                             alt='profile pic'
-                                            className='rounded-full h-12 w-12 ipad4:h-[60px] ipad4:w-[60px] 2xl:h-[60px] 2xl:w-[175px] object-cover'
+                                            className='rounded-full h-11 w-11 ipad4:h-[60px] ipad4:w-[60px] 2xl:h-[60px] 2xl:w-[175px] object-cover'
                                         />
                                         {
                                             onlineUsers.includes(userObj._id) ?
                                                 <div>
-                                                    <div className='bg-green-600 h-3 w-3 rounded-full absolute bottom-[2px] right-1 ipad4:right-0 ipad4:h-4 ipad4:w-4'>
+                                                    <div className='bg-green-600 h-3 w-3 rounded-full absolute bottom-[2px] right-0 ipad4:right-0 ipad4:h-4 ipad4:w-4'>
                                                     </div>
                                                 </div> :
                                                 <div>
-                                                    <div className='bg-orange-300 h-3 w-3 rounded-full absolute bottom-[2px] right-1 ipad4:right-0 ipad4:h-4 ipad4:w-4'>
+                                                    <div className='bg-orange-300 h-3 w-3 rounded-full absolute bottom-[2px] right-0 ipad4:right-0 ipad4:h-4 ipad4:w-4'>
                                                     </div>
                                                 </div>
                                         }
-                                    </div>
-
-                                )
-                            }
-
-                            {
-                                !userObj.profilePic &&
-                                (
+                                    </div> :
                                     <div className='bg-gray-500 text-white rounded-full h-11 w-11 ipad4:h-[60px] ipad4:w-[60px] flex p-5 items-center justify-center relative'>
                                         <h1 className='uppercase text-xl font-semibold ipad4:text-3xl'>
                                             {userObj.name[0]}
@@ -208,10 +200,11 @@ function UsersList({ searchKey, onlineUsers, socket }) {
                                                 </div>
                                         }
                                     </div>
-                                )
+
                             }
-                            <div className='flex flex-col gap-1  w-[82vw] p-2 '>
-                                <div className='flex gap-4 w-full '>
+
+                            <div className='flex flex-col w-full'>
+                                <div className='flex'>
                                     <h1 className='ipad4:text-xl'>{userObj.name}</h1>
                                     {getUnreadMessages(userObj)}
                                 </div>
